@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use FindBin               qw{ $Bin };
+use File::Spec::Functions qw{ catdir updir };
+
+use lib catdir( $Bin, updir(), 'lib' ); # for dev purposes
+
+use WWW::DaysOfWonder::Memoir44::App;
+WWW::DaysOfWonder::Memoir44::App->run;
+
+exit;
