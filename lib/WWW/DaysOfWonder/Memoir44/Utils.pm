@@ -67,12 +67,5 @@ __END__
 
 =head1 DESCRIPTION
 
-This module exports various subs and constants used in the dist. Nothing
-is exported by default. Here's the list of available exports:
-
-=over 4
-
-=item $DBFILE - the path of the sqlite database where all scenarios are
-referenced. cf L<WWW::DaysOfWonder::Memoir44::DB> for more information.
-
-=back
+This module exports various subs used in the dist. Nothing is exported
+by default. Check the list of subs for exported stuff.
