@@ -20,7 +20,7 @@ use Sub::Exporter         -setup => { exports => [ qw{
 =method my $dbpath = get_db_file();
 
 Return the path where the scenarios database will be stored, which will
-be under xdg data_home by default. (cf L<File::BaseDir>)
+be by default in a subdir under xdg data_home (cf L<File::BaseDir>).
 
 =cut
 
