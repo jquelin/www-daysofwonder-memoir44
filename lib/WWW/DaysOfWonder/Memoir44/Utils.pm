@@ -9,14 +9,38 @@ use File::BaseDir         qw{ data_home };
 use File::ShareDir        qw{ dist_dir };
 use File::Spec::Functions qw{ catdir catfile updir };
 use FindBin               qw{ $Bin };
-use Readonly;
 use Sub::Exporter         -setup => { exports => [ qw{
-    $DBFILE $DISTDIR
+    get_db_file get_dist_dir
 } ] };
 
-Readonly our $DBFILE  => _get_dbfile_path();
-Readonly our $DISTDIR => _get_dist_dir();
 
+# -- public subs
+
+=method my $dbpath = get_db_file();
+
+Return the path where the scenarios database will be stored, which will
+be under xdg data_home by default. (cf L<File::BaseDir>)
+
+=cut
+
+sub get_db_file {
+    return catfile( _my_data_home(), 'scenarios.db' );
+}
+
+
+=method my $sharedir = get_dist_dir();
+
+Return the path of the private directory where the distribution will
+store shared stuff. It can be either found with L<File::ShareDir>, or in
+the git checkout if development environment is detected.
+
+=cut
+
+sub get_dist_dir {
+    return ( -d catdir( $Bin, updir, '.git' ) )
+	? catdir( $Bin, updir, 'share' )
+	: dist_dir('WWW-DaysOfWonder-Memoir44');
+}
 
 
 # -- private subs
@@ -28,32 +52,11 @@ Readonly our $DISTDIR => _get_dist_dir();
 # it's in the xdg data_home, then in a perl subdir, then in a subdir
 # named after the perl dist.
 #
+# the directory will be created if needed.
+#
 sub _my_data_home {
-    return data_home( 'perl', 'WWW-DaysOfWonder-Memoir44' );
-}
-
-#
-# my $dbpath = _get_dbfile_path();
-#
-# return the path where the scenarios database will be stored, which
-# will be under xdg data_home by default.
-#
-sub _get_dbfile_path {
-    return catfile( _my_data_home(), 'scenarios.db' );
-}
-
-
-#
-# my $sharedir = _get_dist_dir();
-#
-# return the path where the private distribution directory will store
-# shared stuff. it can be either found with file::sharedir, or in the
-# git checkout if development environment is detected.
-#
-sub _get_dist_dir {
-    return ( -d catdir( $Bin, updir, '.git' ) )
-	? catdir( $Bin, updir, 'share' )
-	: dist_dir('WWW-DaysOfWonder-Memoir44');
+    my $dir = data_home( 'perl', 'WWW-DaysOfWonder-Memoir44' );
+    return $dir;
 }
 
 
