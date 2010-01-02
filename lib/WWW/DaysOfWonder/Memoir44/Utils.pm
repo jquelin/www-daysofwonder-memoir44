@@ -6,14 +6,15 @@ package WWW::DaysOfWonder::Memoir44::Utils;
 # ABSTRACT: various subs and constants used in the dist
 
 use File::BaseDir         qw{ data_home };
+use File::ShareDir        qw{ dist_dir };
 use File::Spec::Functions qw{ catfile };
 use Readonly;
 use Sub::Exporter         -setup => { exports => [ qw{
-    $DBFILE
+    $DBFILE $DISTDIR
 } ] };
 
-Readonly my $DBFILE => _get_dbfile_path();
-
+Readonly our $DBFILE  => _get_dbfile_path();
+Readonly our $DISTDIR => dist_dir('WWW-DaysOfWonder-Memoir44');
 
 # -- private subs
 
