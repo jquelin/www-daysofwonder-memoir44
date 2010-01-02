@@ -6,6 +6,7 @@ package WWW::DaysOfWonder::Memoir44::Utils;
 # ABSTRACT: various subs and constants used in the dist
 
 use File::BaseDir         qw{ data_home };
+use File::Path       2.08 qw{ make_path };
 use File::ShareDir        qw{ dist_dir };
 use File::Spec::Functions qw{ catdir catfile updir };
 use FindBin               qw{ $Bin };
@@ -56,6 +57,7 @@ sub get_dist_dir {
 #
 sub _my_data_home {
     my $dir = data_home( 'perl', 'WWW-DaysOfWonder-Memoir44' );
+    make_path( $dir );
     return $dir;
 }
 
