@@ -7,14 +7,17 @@ package WWW::DaysOfWonder::Memoir44::Utils;
 
 use File::BaseDir         qw{ data_home };
 use File::ShareDir        qw{ dist_dir };
-use File::Spec::Functions qw{ catfile };
+use File::Spec::Functions qw{ catdir catfile updir };
+use FindBin               qw{ $Bin };
 use Readonly;
 use Sub::Exporter         -setup => { exports => [ qw{
     $DBFILE $DISTDIR
 } ] };
 
 Readonly our $DBFILE  => _get_dbfile_path();
-Readonly our $DISTDIR => dist_dir('WWW-DaysOfWonder-Memoir44');
+Readonly our $DISTDIR => _get_dist_dir();
+
+
 
 # -- private subs
 
@@ -38,6 +41,21 @@ sub _my_data_home {
 sub _get_dbfile_path {
     return catfile( _my_data_home(), 'scenarios.db' );
 }
+
+
+#
+# my $sharedir = _get_dist_dir();
+#
+# return the path where the private distribution directory will store
+# shared stuff. it can be either found with file::sharedir, or in the
+# git checkout if development environment is detected.
+#
+sub _get_dist_dir {
+    return ( -d catdir( $Bin, updir, '.git' ) )
+	? catdir( $Bin, updir, 'share' )
+	: dist_dir('WWW-DaysOfWonder-Memoir44');
+}
+
 
 1;
 __END__
