@@ -7,6 +7,7 @@ package WWW::DaysOfWonder::Memoir44::App::Command::update;
 
 use HTML::TreeBuilder;
 use LWP::UserAgent;
+use Term::Twiddle;
 use Text::Trim;
 
 use WWW::DaysOfWonder::Memoir44::App -command;
@@ -26,6 +27,7 @@ sub opt_spec {
 
 sub execute {
     my $self = shift;
+    my $twiddle = Term::Twiddle->new;
 
     # the user agent will be reused
     my $ua = LWP::UserAgent->new;
@@ -41,12 +43,15 @@ sub execute {
         say "- url: $url";
 
         print "- downloading url: ";
+        $twiddle->start;
         my $response = $ua->get("$url");
+        $twiddle->stop;
         die $response->status_line unless $response->is_success;
         say "done";
 
         # parse html to find list of scenarios
         print "- parsing: ";
+        $twiddle->start;
         my $tree  = HTML::TreeBuilder->new_from_content( $response->content );
         my $table = $tree->find_by_tag_name( 'table' );
         #die $table->dump;
@@ -56,6 +61,7 @@ sub execute {
             sub { $_[0]->depth == $depth+1 },
         );
         shift @rows; # trim title line
+        $twiddle->stop;
         say "found ", scalar(@rows), " scenarios";
 
         # extracting scenarios from table rows
