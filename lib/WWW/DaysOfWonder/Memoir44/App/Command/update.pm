@@ -7,6 +7,7 @@ package WWW::DaysOfWonder::Memoir44::App::Command::update;
 
 use HTML::TreeBuilder;
 use LWP::UserAgent;
+use Term::ProgressBar;
 use Term::Twiddle;
 use Text::Trim;
 
@@ -65,7 +66,14 @@ sub execute {
         say "found ", scalar(@rows), " scenarios";
 
         # extracting scenarios from table rows
-        print "- extracting scenarios: ";
+        my $prefix = "- extracting scenarios";
+        my $progress = Term::ProgressBar->new( {
+            count     => scalar(@rows),
+            bar_width => 40,
+            remove    => 1,
+            name      => $prefix,
+        } );
+        $progress->minor(0);
         foreach my $row ( @rows ) {
             my %data = _scenario_data_from_html_row($row);
             $data{source} = $source;
@@ -73,8 +81,10 @@ sub execute {
                 map { $_ => $data{$_} } keys(%data)
             );
             $scenario->insert;
+            $progress->update;
         }
-        say "done";
+        say "${prefix}: done";
+
         die;
     }
 }
