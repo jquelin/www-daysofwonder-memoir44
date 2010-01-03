@@ -34,3 +34,13 @@ sub execute {
 1;
 __END__
 
+=for Pod::Coverage::TrustPod
+    description
+    opt_spec
+    execute
+
+=head1 DESCRIPTION
+
+This command updates the database of scenarios available from days of
+wonder website.
+
