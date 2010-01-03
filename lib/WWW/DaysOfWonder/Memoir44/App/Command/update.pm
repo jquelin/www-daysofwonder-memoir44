@@ -5,6 +5,8 @@ use warnings;
 package WWW::DaysOfWonder::Memoir44::App::Command::update;
 # ABSTRACT: update db from dow website
 
+use LWP::UserAgent;
+
 use WWW::DaysOfWonder::Memoir44::App -command;
 use WWW::DaysOfWonder::Memoir44::DB;
 use WWW::DaysOfWonder::Memoir44::Url;
@@ -23,11 +25,26 @@ sub opt_spec {
 sub execute {
     my $self = shift;
 
+    # the user agent will be reused
+    my $ua = LWP::UserAgent->new;
+    $ua->agent('');
+    $ua->env_proxy;
+
     # remove all existing scenarios from db
     WWW::DaysOfWonder::Memoir44::DB::Scenario->delete('');
 
-    my $url = WWW::DaysOfWonder::Memoir44::Url->new({source=>'game'});
-    say "update: $url";
+    foreach my $source ( qw{ game approved public } ) {
+        my $url = WWW::DaysOfWonder::Memoir44::Url->new({source=>$source});
+        say "* updating $source scenarios";
+        say "- url: $url";
+
+        print "- downloading url: ";
+        my $response = $ua->get("$url");
+        die $response->status_line unless $response->is_success;
+        say "done";
+
+        die;
+    }
 }
 
 
