@@ -10,6 +10,7 @@ use File::Path       2.08 qw{ make_path };
 use File::ShareDir        qw{ dist_dir };
 use File::Spec::Functions qw{ catdir catfile updir };
 use FindBin               qw{ $Bin };
+use Path::Class;
 use Sub::Exporter         -setup => { exports => [ qw{
     get_db_file get_dist_dir
 } ] };
@@ -38,8 +39,9 @@ the git checkout if development environment is detected.
 =cut
 
 sub get_dist_dir {
-    return ( -d catdir( $Bin, updir, '.git' ) )
-	? catdir( $Bin, updir, 'share' )
+    my $dir = dir($Bin)->parent;
+    return ( -e $dir->file( 'dist.ini' ) )
+	? $dir->subdir( 'share' )->stringify
 	: dist_dir('WWW-DaysOfWonder-Memoir44');
 }
 
