@@ -39,10 +39,17 @@ the git checkout if development environment is detected.
 =cut
 
 sub get_dist_dir {
-    my $dir = dir($Bin)->parent;
-    return ( -e $dir->file( 'dist.ini' ) )
-	? $dir->subdir( 'share' )->stringify
-	: dist_dir('WWW-DaysOfWonder-Memoir44');
+    my $dir = dir($Bin);
+
+    # when running tests from build.pl
+    return $dir->subdir( 'share' )->stringify if -e $dir->file( 'dist.ini' );
+
+    # when running from development checkout
+    $dir = $dir->parent;
+    return $dir->subdir( 'share' )->stringify if -e $dir->file( 'dist.ini' );
+
+    # regular usage: using file::sharedir
+    return dist_dir('WWW-DaysOfWonder-Memoir44');
 }
 
 
