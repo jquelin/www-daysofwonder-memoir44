@@ -6,6 +6,8 @@ package WWW::DaysOfWonder::Memoir44::App::Command::update;
 # ABSTRACT: update db from dow website
 
 use WWW::DaysOfWonder::Memoir44::App -command;
+use WWW::DaysOfWonder::Memoir44::DB;
+use WWW::DaysOfWonder::Memoir44::Url;
 
 sub description {
 'Update the database after the list of scenarios from days of wonder
@@ -20,7 +22,12 @@ sub opt_spec {
 
 sub execute {
     my $self = shift;
-    say 'update';
+
+    # remove all existing scenarios from db
+    WWW::DaysOfWonder::Memoir44::DB::Scenario->delete('');
+
+    my $url = WWW::DaysOfWonder::Memoir44::Url->new({source=>'game'});
+    say "update: $url";
 }
 
 
