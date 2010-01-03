@@ -7,6 +7,7 @@ package WWW::DaysOfWonder::Memoir44::App::Command::update;
 
 use HTML::TreeBuilder;
 use LWP::UserAgent;
+use Text::Trim;
 
 use WWW::DaysOfWonder::Memoir44::App -command;
 use WWW::DaysOfWonder::Memoir44::DB;
@@ -57,8 +58,65 @@ sub execute {
         shift @rows; # trim title line
         say "found ", scalar(@rows), " scenarios";
 
+        # extracting scenarios from table rows
+        print "- extracting scenarios: ";
+        foreach my $row ( @rows ) {
+            my %data = _scenario_data_from_html_row($row);
+            $data{source} = $source;
+            my $scenario = WWW::DaysOfWonder::Memoir44::DB::Scenario->new(
+                map { $_ => $data{$_} } keys(%data)
+            );
+            $scenario->insert;
+        }
+        say "done";
         die;
     }
+}
+
+
+
+sub _scenario_data_from_html_row {
+    my $row = shift;
+    my %data;
+
+    # split row in cells
+    my $depth = $row->depth;
+    my @cells = $row->look_down(
+        '_tag', 'td',
+        sub { $_[0]->depth == $depth+1 },
+    );
+
+    # extract values and fill in the hash
+    my $link = $cells[9]->find_by_tag_name('a')->attr('href');
+    ($data{id}) = ($link =~ /id=(\d+)/);
+    $data{name}      = trim($cells[0]->as_text);
+    $data{operation} = trim($cells[2]->as_text);
+    $data{front}     = trim($cells[3]->as_text);
+    $data{author}    = trim($cells[4]->as_text);
+    $data{rating}    = substr $cells[6]->find_by_tag_name('img')->attr('alt'), 0, 1;
+
+    my $updated = trim($cells[5]->as_text);                    # dd/mm/yyyy
+    $data{updated}   = join '-', reverse split /\//, $updated; # yyyy-mm-dd
+
+    # fill in booleans
+    my @subcells = $cells[8]->find_by_tag_name('td');
+    my $boardimg = $subcells[2]->find_by_tag_name('img')->attr('src');
+    $boardimg =~ /mm_board_([^_]+)_([^.]+)\.gif/
+        or die "unknwon board image: $boardimg";
+    $data{format} = $1;
+    $data{board}  = $2;
+    my @imgs =
+        map { $_->attr('src') }
+        $subcells[3]->find_by_tag_name('img');
+    $data{need_tp} = grep { /pack_terrain/ } @imgs;
+    $data{need_ef} = grep { /pack_eastern/ } @imgs;
+    $data{need_pt} = grep { /pack_pacific/ } @imgs;
+    $data{need_mt} = grep { /pack_mediterranean/ } @imgs;
+    $data{need_ap} = grep { /pack_air/ } @imgs;
+    $data{need_bm} = 0; # grep { /pack_/ } @imgs;
+    $data{need_cb} = 0; # grep { /pack_/ } @imgs;
+
+    return %data;
 }
 
 
