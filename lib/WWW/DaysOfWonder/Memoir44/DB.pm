@@ -21,6 +21,27 @@ use ORLite::Migrate {
 1;
 __END__
 
+=for Pod::Coverage::TrustPod
+    dsn
+    dbh
+    commit
+    rollback
+    do
+    selectall_arrayref
+    selectall_hashref
+    selectcol_arrayref
+    selectrow_array
+    selectrow_arrayref
+    selectrow_hashref
+    prepare
+    pragma
+    begin
+    connect
+    iterate
+    orlite
+    sqlite
+
+
 =head1 DESCRIPTION
 
 This module is used to fetch auto-magically the database schema from the
