@@ -5,6 +5,7 @@ use warnings;
 package WWW::DaysOfWonder::Memoir44::App::Command::update;
 # ABSTRACT: update db from dow website
 
+use HTML::TreeBuilder;
 use LWP::UserAgent;
 
 use WWW::DaysOfWonder::Memoir44::App -command;
@@ -42,6 +43,19 @@ sub execute {
         my $response = $ua->get("$url");
         die $response->status_line unless $response->is_success;
         say "done";
+
+        # parse html to find list of scenarios
+        print "- parsing: ";
+        my $tree  = HTML::TreeBuilder->new_from_content( $response->content );
+        my $table = $tree->find_by_tag_name( 'table' );
+        #die $table->dump;
+        my $depth = $table->depth;
+        my @rows  = $table->look_down(
+            '_tag', 'tr',
+            sub { $_[0]->depth == $depth+1 },
+        );
+        shift @rows; # trim title line
+        say "found ", scalar(@rows), " scenarios";
 
         die;
     }
