@@ -84,8 +84,6 @@ sub execute {
             $progress->update;
         }
         say "${prefix}: done";
-
-        die;
     }
 }
 
