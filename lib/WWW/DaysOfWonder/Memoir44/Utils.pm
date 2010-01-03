@@ -6,9 +6,7 @@ package WWW::DaysOfWonder::Memoir44::Utils;
 # ABSTRACT: various subs and constants used in the dist
 
 use File::BaseDir         qw{ data_home };
-use File::Path       2.08 qw{ make_path };
 use File::ShareDir        qw{ dist_dir };
-use File::Spec::Functions qw{ catdir catfile updir };
 use FindBin               qw{ $Bin };
 use Path::Class;
 use Sub::Exporter         -setup => { exports => [ qw{
@@ -26,7 +24,8 @@ be by default in a subdir under xdg data_home (cf L<File::BaseDir>).
 =cut
 
 sub get_db_file {
-    return catfile( _my_data_home(), 'scenarios.db' );
+    my $dir = _my_data_home();
+    return $dir->file( 'scenarios.db' )->stringify;
 }
 
 
@@ -65,8 +64,8 @@ sub get_dist_dir {
 # the directory will be created if needed.
 #
 sub _my_data_home {
-    my $dir = data_home( 'perl', 'WWW-DaysOfWonder-Memoir44' );
-    make_path( $dir );
+    my $dir = dir( data_home( 'perl', 'WWW-DaysOfWonder-Memoir44' ) );
+    $dir->mkpath;
     return $dir;
 }
 
