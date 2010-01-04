@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 package WWW::DaysOfWonder::Memoir44;
-# ABSTRACT: download & manage memoir44 scenarios from its website
+# ABSTRACT: download & manage memoir44 scenarios from official website
 
 1;
 __END__
