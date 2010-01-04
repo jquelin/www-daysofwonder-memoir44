@@ -22,6 +22,7 @@ CREATE TABLE scenario (
     need_bm     BOOLEAN,        -- battle map
     need_cb     BOOLEAN,        -- campaign books
     board       VARCHAR,
-    format      VARCHAR
+    format      VARCHAR,
+    source      VARCHAR
 )
 END_SQL
