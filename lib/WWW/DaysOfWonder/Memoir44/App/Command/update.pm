@@ -69,7 +69,7 @@ sub execute {
         my $prefix = "- extracting scenarios";
         my $progress = Term::ProgressBar->new( {
             count     => scalar(@rows),
-            bar_width => 40,
+            bar_width => 50,
             remove    => 1,
             name      => $prefix,
         } );
@@ -84,6 +84,9 @@ sub execute {
             $progress->update;
         }
         say "${prefix}: done";
+
+        # source complete
+        print "\n";
     }
 }
 
