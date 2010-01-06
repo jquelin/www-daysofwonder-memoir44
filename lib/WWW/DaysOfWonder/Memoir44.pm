@@ -10,7 +10,8 @@ __END__
 
 =head1 DESCRIPTION
 
-Memoir'44 is a unique historical game where players command a horde of
+Memoir'44 is a unique historical game edited by L<Days of
+Wonder|http://www.daysofwonder.com>, where players command a horde of
 little plastic Army men facing-off in dozens of WWII battles on an
 oversize hex game board. Each battle scenario mimics the historical
 terrain, troop placements and objectives of each army. Deploying forces
