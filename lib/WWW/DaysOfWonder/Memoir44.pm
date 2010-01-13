@@ -47,7 +47,7 @@ L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-DaysOfWonder-Memoir44>
 
 =item * Git repository
 
-L<http://github.com/jquelin/www-daysofwonder-memoir44.git>
+L<http://github.com/jquelin/www-daysofwonder-memoir44>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
