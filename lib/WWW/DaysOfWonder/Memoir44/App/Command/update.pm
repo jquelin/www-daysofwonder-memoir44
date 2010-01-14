@@ -91,7 +91,29 @@ sub execute {
 }
 
 
-
+#
+# my %data = _scenario_data_from_html_row($row);
+#
+# given a $row of the table fetched from dow website, parse it and
+# return a hash with all scenario properties extracted. the hash
+# keys are:
+#  - id:        id of the scenario
+#  - name:      scenario name
+#  - operation: operation the scenario is part of
+#  - front:     west, east, mediterranean, etc.
+#  - author:    who wrote the scenario
+#  - rating:    average scenario rating (1, 2 or 3)
+#  - updated:   date of last scenario update
+#  - format:    standard, overlord, breakthru
+#  - board:     country, beach, winter, desert
+#  - need_tp:   whether terrain pack is needed
+#  - need_ef:   whether eastern front is needed
+#  - need_mt:   whether mediterranean theater is needed
+#  - need_pt:   whether pacific theater is needed
+#  - need_ap:   whether air pack is needed
+#  - need_bm:   whether battle maps is needed
+#  - need_cb:   whether campaign book is needed
+#
 sub _scenario_data_from_html_row {
     my $row = shift;
     my %data;
