@@ -15,6 +15,9 @@ use WWW::DaysOfWonder::Memoir44::App -command;
 use WWW::DaysOfWonder::Memoir44::DB;
 use WWW::DaysOfWonder::Memoir44::Url;
 
+
+# -- public methods
+
 sub description {
 'Update the database after the list of scenarios from days of wonder
 website. This will *not* download the scenarios themselves - see the
@@ -39,10 +42,12 @@ sub execute {
     WWW::DaysOfWonder::Memoir44::DB::Scenario->delete('');
 
     foreach my $source ( qw{ game approved public } ) {
+        # create the source url
         my $url = WWW::DaysOfWonder::Memoir44::Url->new({source=>$source});
         say "* updating $source scenarios";
         say "- url: $url";
 
+        # downloading url listing the scenarios
         print "- downloading url: ";
         $twiddle->start;
         my $response = $ua->get("$url");
@@ -57,6 +62,8 @@ sub execute {
         my $table = $tree->find_by_tag_name( 'table' );
         #die $table->dump;
         my $depth = $table->depth;
+        # find rows, but only one level deep. otherwise, it would also
+        # find rows of tables embedded in some cells.
         my @rows  = $table->look_down(
             '_tag', 'tr',
             sub { $_[0]->depth == $depth+1 },
@@ -73,10 +80,12 @@ sub execute {
             remove    => 1,
             name      => $prefix,
         } );
-        $progress->minor(0);
+        $progress->minor(0); # don't know why this doesn't work as constructor param
         foreach my $row ( @rows ) {
+            # extract scenario data from row
             my %data = _scenario_data_from_html_row($row);
             $data{source} = $source;
+            # create a scenario object and insert it in database
             my $scenario = WWW::DaysOfWonder::Memoir44::DB::Scenario->new(
                 map { $_ => $data{$_} } keys(%data)
             );
@@ -90,6 +99,8 @@ sub execute {
     }
 }
 
+
+# -- private methods
 
 #
 # my %data = _scenario_data_from_html_row($row);
