@@ -34,6 +34,19 @@ sub _build__uri {
     $uri->host( 'www.daysofwonder.com' );
     $uri->path( '/memoir44/fr/scenario_list/' );
 
+    # canonical url:
+    # http://www.daysofwonder.com/memoir44/fr/scenario_list/?sellang=fr&start=0&page_limit=2000
+    # other valid http options:
+    #   status      game = shipped, approved = official, public = non-dow
+    #   selpack_tp  terrain pack
+    #   selpack_ef  east front
+    #   selpack_pt  pacific theater
+    #   selpack_ap  air pack
+    #   selpack_mt  mediterranean theater
+    #   selpack_bm  battle map
+    #   selpack_cb  carnets campagne
+    # with values: 0 = undef, 1 = with, 2 = without
+    # eg: selpack_tp=1&selpack_ef=2
     my %options = (
         sellang    => 'fr',
         start      => 0,
@@ -58,21 +71,6 @@ when the object needs to be stringified by perl due to the context.
 # handled by _uri attribute
 
 
-# canonical url:
-# http://www.daysofwonder.com/memoir44/fr/scenario_list/?sellang=fr&start=0&page_limit=2000
-# other valid http options:
-#   status      game = shipped, approved = official, public = non-dow
-#   selpack_tp  terrain pack, 
-#   selpack_ef  east front
-#   selpack_pt  pacific theater
-#   selpack_ap  air pack
-#   selpack_mt  mediterranean theater
-#   selpack_bm  battle map
-#   selpack_cb  carnets campagne
-# with values: 0 = undef, 1 = with, 2 = without
-# eg: selpack_tp=1&selpack_ef=2
-
-
 1;
 __END__
 
@@ -85,7 +83,7 @@ __END__
 
 =head1 DESCRIPTION
 
-This modules encapsulates urls to fetch scenarios from Days of Wonder.
+This module encapsulates urls to fetch scenarios from Days of Wonder.
 Depending on various criterias (cf attributes), the url listing the
 available scenarios will be different.
 
