@@ -9,7 +9,7 @@ use Moose;
 use MooseX::Has::Sugar;
 use URI;
 
-use overload '""' => \&as_string;
+use overload q{""} => 'as_string';
 
 
 # -- attributes
@@ -22,7 +22,7 @@ L<WWW::DaysOfWonder::Memoir44::Types>.
 =cut
 
 has source => ( ro, isa=>'Str', required   );
-has _uri   => ( ro, isa=>'URI', lazy_build );
+has _uri   => ( ro, isa=>'URI', lazy_build, handles=>['as_string'] );
 
 
 # -- initializers & builders
@@ -55,10 +55,8 @@ when the object needs to be stringified by perl due to the context.
 
 =cut
 
-sub as_string {
-    my $self = shift;
-    return $self->_uri->as_string;
-}
+# handled by _uri attribute
+
 
 # canonical url:
 # http://www.daysofwonder.com/memoir44/fr/scenario_list/?sellang=fr&start=0&page_limit=2000
