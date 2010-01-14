@@ -7,7 +7,7 @@ package WWW::DaysOfWonder::Memoir44::App::Command::update;
 
 use HTML::TreeBuilder;
 use LWP::UserAgent;
-use Term::ProgressBar;
+use Term::ProgressBar::Quiet;
 use Term::Twiddle::Quiet;
 use Text::Trim;
 
@@ -67,7 +67,7 @@ sub execute {
 
         # extracting scenarios from table rows
         my $prefix = "- extracting scenarios";
-        my $progress = Term::ProgressBar->new( {
+        my $progress = Term::ProgressBar::Quiet->new( {
             count     => scalar(@rows),
             bar_width => 50,
             remove    => 1,
