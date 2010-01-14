@@ -8,7 +8,7 @@ package WWW::DaysOfWonder::Memoir44::App::Command::update;
 use HTML::TreeBuilder;
 use LWP::UserAgent;
 use Term::ProgressBar;
-use Term::Twiddle;
+use Term::Twiddle::Quiet;
 use Text::Trim;
 
 use WWW::DaysOfWonder::Memoir44::App -command;
@@ -28,7 +28,7 @@ sub opt_spec {
 
 sub execute {
     my $self = shift;
-    my $twiddle = Term::Twiddle->new;
+    my $twiddle = Term::Twiddle::Quiet->new;
 
     # the user agent will be reused
     my $ua = LWP::UserAgent->new;
