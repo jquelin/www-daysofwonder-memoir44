@@ -64,7 +64,7 @@ sub get_dist_dir {
 # the directory will be created if needed.
 #
 sub _my_data_home {
-    my $dir = dir( data_home( 'perl', 'WWW-DaysOfWonder-Memoir44' ) );
+    my $dir = dir( data_home( 'perl', 'dist', 'WWW-DaysOfWonder-Memoir44' ) );
     $dir->mkpath;
     return $dir;
 }
