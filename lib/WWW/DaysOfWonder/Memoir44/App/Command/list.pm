@@ -29,8 +29,7 @@ sub execute {
 
     my @scenarios = WWW::DaysOfWonder::Memoir44::DB::Scenario->select;
     foreach my $s ( @scenarios ) {
-        my $str = $s->id . ' ' . $s->name;
-        say encode( 'utf-8', $str );
+        print encode( 'utf-8', $s );
     }
 }
 
