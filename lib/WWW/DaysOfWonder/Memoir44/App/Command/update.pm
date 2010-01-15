@@ -173,10 +173,6 @@ sub _scenario_data_from_html_row {
 1;
 __END__
 
-=for Pod::Coverage::TrustPod
-    description
-    opt_spec
-    execute
 
 =head1 DESCRIPTION
 

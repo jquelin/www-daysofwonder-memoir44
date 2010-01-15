@@ -31,10 +31,6 @@ sub execute {
 1;
 __END__
 
-=for Pod::Coverage::TrustPod
-    description
-    opt_spec
-    execute
 
 =head1 DESCRIPTION
 
