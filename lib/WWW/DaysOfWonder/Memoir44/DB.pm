@@ -7,6 +7,7 @@ package WWW::DaysOfWonder::Memoir44::DB;
 
 use File::Spec::Functions qw{ catdir };
 
+use WWW::DaysOfWonder::Memoir44::DB::Scenario;
 use WWW::DaysOfWonder::Memoir44::Utils qw{ get_db_file get_dist_dir };
 
 use ORLite ();
