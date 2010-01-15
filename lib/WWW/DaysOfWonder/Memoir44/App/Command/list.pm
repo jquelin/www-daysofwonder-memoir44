@@ -5,6 +5,8 @@ use warnings;
 package WWW::DaysOfWonder::Memoir44::App::Command::list;
 # ABSTRACT: list scenarios according to various criterias
 
+use Encode qw{ encode };
+
 use WWW::DaysOfWonder::Memoir44::App -command;
 use WWW::DaysOfWonder::Memoir44::DB;
 
@@ -23,8 +25,13 @@ sub opt_spec {
 }
 
 sub execute {
-    my $self = shift;
-    say "list";
+    my ($self, $opts, $args) = @_;
+
+    my @scenarios = WWW::DaysOfWonder::Memoir44::DB::Scenario->select;
+    foreach my $s ( @scenarios ) {
+        my $str = $s->id . ' ' . $s->name;
+        say encode( 'utf-8', $str );
+    }
 }
 
 
