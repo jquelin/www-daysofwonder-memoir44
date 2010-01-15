@@ -21,13 +21,35 @@ this action.';
 
 sub opt_spec {
     my $self = shift;
-    return;
+    return (
+        [],
+        [ 'list only scenario that need extension:' ],
+        [ 'tp!' => 'terrain pack          (--notp to negate)' ],
+        [ 'ef!' => 'east front            (--noef to negate)' ],
+        [ 'pt!' => 'pacific theater       (--nopt to negate)' ],
+        [ 'mt!' => 'mediterranean theater (--nomt to negate)' ],
+        [ 'ap!' => 'air pack              (--noap to negate)' ],
+    );
 }
 
 sub execute {
     my ($self, $opts, $args) = @_;
 
-    my @scenarios = WWW::DaysOfWonder::Memoir44::DB::Scenario->select;
+    # prepare the filter
+    my @clauses;
+    push @clauses, "need_tp = $opts->{tp}" if defined $opts->{tp};
+    push @clauses, "need_ef = $opts->{ef}" if defined $opts->{ef};
+    push @clauses, "need_pt = $opts->{pt}" if defined $opts->{pt};
+    push @clauses, "need_mt = $opts->{mt}" if defined $opts->{mt};
+    push @clauses, "need_ap = $opts->{ap}" if defined $opts->{ap};
+
+    # creating filter + fetching matching rows
+    my $clauses = scalar(@clauses)
+        ? 'WHERE ' . join( ' AND ', @clauses )
+        : undef;
+    my @scenarios = WWW::DaysOfWonder::Memoir44::DB::Scenario->select($clauses);
+
+    # display the results
     foreach my $s ( @scenarios ) {
         print encode( 'utf-8', $s );
     }
