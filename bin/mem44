@@ -26,6 +26,7 @@ mem44 - download & manage memoir44 scenarios from official website
 =head1 SYNOPSIS
 
     mem44 update
+    mem44 list
 
     # for help purposes
     mem44 commands
