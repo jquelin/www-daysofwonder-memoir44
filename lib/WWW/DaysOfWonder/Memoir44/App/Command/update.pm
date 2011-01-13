@@ -33,7 +33,7 @@ sub opt_spec {
 sub execute {
     my $self    = shift;
     my $twiddle = Term::Twiddle::Quiet->new;
-    my $db      = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    my $db      = WWW::DaysOfWonder::Memoir44::DB::Scenarios->new;
 
     # the user agent will be reused
     my $ua = LWP::UserAgent->new;

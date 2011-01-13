@@ -6,7 +6,7 @@ package WWW::DaysOfWonder::Memoir44::DB::Scenarios;
 # ABSTRACT: scenarios database
 
 use JSON;
-use MooseX::Singleton;
+use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Storage;
 use Path::Class;
@@ -36,7 +36,7 @@ has scenarios => (
   
 =method add
 
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->new;
     $db->add( @scenarios );
 
 Store a new scenario in the scenarios database.
@@ -48,7 +48,7 @@ Store a new scenario in the scenarios database.
 
 =method clear
 
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->new;
     $db->clear;
 
 Remove all scenarios from the database.
@@ -60,10 +60,11 @@ Remove all scenarios from the database.
 
 =method write
 
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->new;
     $db->write;
 
-Store the whole scenarios database to a file.
+Store the whole scenarios database to a file. The file is internal to
+the distrib, no need for you to say where it's located.
 
 =cut
 
