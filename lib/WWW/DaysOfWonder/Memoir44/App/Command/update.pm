@@ -35,7 +35,7 @@ sub execute {
 
     # the user agent will be reused
     my $ua = LWP::UserAgent->new;
-    $ua->agent('');
+    $ua->agent('WWW::DaysOfWonder::Memoir44');
     $ua->env_proxy;
 
     # remove all existing scenarios from db
