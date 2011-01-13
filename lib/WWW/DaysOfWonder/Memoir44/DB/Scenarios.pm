@@ -58,6 +58,20 @@ Remove all scenarios from the database.
 # implemented by the 'Array' trait of the 'scenarios' attribute.
 
 
+=method read
+
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->read;
+
+Read the whole scenarios database from a file. The file is internal to
+the distrib, no need for you to say where it's located.
+
+=cut
+
+sub read {
+    return __PACKAGE__->load( $dbfile->stringify );
+}
+
+
 =method write
 
     my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->new;
