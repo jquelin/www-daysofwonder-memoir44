@@ -7,7 +7,10 @@ package WWW::DaysOfWonder::Memoir44::Scenario;
 
 use Moose;
 use MooseX::Has::Sugar;
+use MooseX::Storage;
 use Perl6::Form;
+
+with Storage;
 
 use overload q{""} => 'as_string';
 
@@ -155,5 +158,7 @@ __END__
 
 =head1 DESCRIPTION
 
-This module represents a scenario with all its attributes.
+This module represents a scenario with all its attributes. It implements
+L<MooseX::Storage> role, and therefore methods C<pack()> and C<unpack()>
+are available.
 
