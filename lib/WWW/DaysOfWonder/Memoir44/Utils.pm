@@ -9,9 +9,33 @@ use File::BaseDir         qw{ data_home };
 use File::ShareDir        qw{ dist_dir };
 use FindBin               qw{ $Bin };
 use Path::Class;
-use Sub::Exporter         -setup => { exports => [ qw{
-    get_db_file get_dist_dir
-} ] };
+use Sub::Exporter         -setup => {
+    exports => [ qw{
+    get_db_file get_dist_dir DATADIR
+} ],
+    groups => { default => [ qw{ DATADIR } ] },
+};
+
+use File::HomeDir::PathClass;
+
+
+# -- public subs
+
+=method DATADIR
+
+    my $file = DATADIR->file( ... );
+
+Return a L<Path::Class> object containing the data directory for the
+distribution. The directory will be created if needed.
+
+The sub is exported by default.
+
+=cut
+
+sub DATADIR {
+    return File::HomeDir::PathClass->my_dist_data(
+        'WWW-DaysOfWonder-Memoir44', { create => 1 } );
+}
 
 
 # -- public subs
@@ -75,5 +99,4 @@ __END__
 
 =head1 DESCRIPTION
 
-This module exports various subs used in the dist. Nothing is exported
-by default. Check the list of subs for exported stuff.
+This module exports various subs used in the dist.
