@@ -4,6 +4,9 @@ use 5.010;
 use strict;
 use warnings;
 
+package main;
+# ABSTRACT: download & manage memoir44 scenarios from official website
+
 use FindBin               qw{ $Bin };
 use File::Spec::Functions qw{ catdir updir };
 
@@ -17,11 +20,6 @@ WWW::DaysOfWonder::Memoir44::App->run;
 exit;
 
 __END__
-
-=head1 NAME
-
-mem44 - download & manage memoir44 scenarios from official website
-
 
 =head1 SYNOPSIS
 
