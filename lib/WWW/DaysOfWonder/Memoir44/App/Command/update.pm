@@ -12,7 +12,8 @@ use Term::Twiddle::Quiet;
 use Text::Trim;
 
 use WWW::DaysOfWonder::Memoir44::App -command;
-use WWW::DaysOfWonder::Memoir44::DB;
+use WWW::DaysOfWonder::Memoir44::Scenario;
+use WWW::DaysOfWonder::Memoir44::DB::Scenarios;
 use WWW::DaysOfWonder::Memoir44::Url;
 
 
@@ -30,8 +31,9 @@ sub opt_spec {
 }
 
 sub execute {
-    my $self = shift;
+    my $self    = shift;
     my $twiddle = Term::Twiddle::Quiet->new;
+    my $db      = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
 
     # the user agent will be reused
     my $ua = LWP::UserAgent->new;
@@ -39,7 +41,7 @@ sub execute {
     $ua->env_proxy;
 
     # remove all existing scenarios from db
-    WWW::DaysOfWonder::Memoir44::DB::Scenario->delete('');
+    $db->clear;
 
     foreach my $source ( qw{ game approved public } ) {
         # create the source url
@@ -85,11 +87,9 @@ sub execute {
             # extract scenario data from row
             my %data = _scenario_data_from_html_row($row);
             $data{source} = $source;
-            # create a scenario object and insert it in database
-            my $scenario = WWW::DaysOfWonder::Memoir44::DB::Scenario->new(
-                map { $_ => $data{$_} } keys(%data)
-            );
-            $scenario->insert;
+            # create a scenario object and store it in the database
+            my $scenario = WWW::DaysOfWonder::Memoir44::Scenario->new(%data);
+            $db->add( $scenario );
             $progress->update;
         }
         say "${prefix}: done";
@@ -97,6 +97,7 @@ sub execute {
         # source complete
         print "\n";
     }
+    $db->write;
 }
 
 
