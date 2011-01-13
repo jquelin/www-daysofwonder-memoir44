@@ -8,7 +8,7 @@ package WWW::DaysOfWonder::Memoir44::App::Command::list;
 use Encode qw{ encode };
 
 use WWW::DaysOfWonder::Memoir44::App -command;
-use WWW::DaysOfWonder::Memoir44::DB;
+use WWW::DaysOfWonder::Memoir44::DB::Scenarios;
 
 
 # -- public methods
@@ -37,17 +37,18 @@ sub execute {
 
     # prepare the filter
     my @clauses;
-    push @clauses, "need_tp = $opts->{tp}" if defined $opts->{tp};
-    push @clauses, "need_ef = $opts->{ef}" if defined $opts->{ef};
-    push @clauses, "need_pt = $opts->{pt}" if defined $opts->{pt};
-    push @clauses, "need_mt = $opts->{mt}" if defined $opts->{mt};
-    push @clauses, "need_ap = $opts->{ap}" if defined $opts->{ap};
+    foreach my $expansion ( qw{ tp ef pt mt ap } ) {
+        next unless defined $opts->{$expansion};
+        my $clause = '$_->need_';
+        $clause    = "!$clause" unless $opts->{$expansion};
+        push @clauses, $clause . $expansion;
+    }
+    my $grep = "sub { " . join(" & ", (1,@clauses)) . " }";
+    $grep = eval $grep;
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->read;
 
-    # creating filter + fetching matching rows
-    my $clauses = scalar(@clauses)
-        ? 'WHERE ' . join( ' AND ', @clauses )
-        : undef;
-    my @scenarios = WWW::DaysOfWonder::Memoir44::DB::Scenario->select($clauses);
+
+    my @scenarios = $db->grep( $grep );
 
     # display the results
     foreach my $s ( @scenarios ) {

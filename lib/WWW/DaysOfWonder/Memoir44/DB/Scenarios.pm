@@ -28,6 +28,7 @@ has scenarios => (
         nb_scenarios => 'count',     # my $nb = $db->nb_scenarios;
         add          => 'push',      # $db->add( $scenario, $scenario );
         clear        => 'clear',     # $db->clear;
+        grep         => 'grep',
     }
 );
 
