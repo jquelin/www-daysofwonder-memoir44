@@ -27,6 +27,7 @@ has scenarios => (
     handles    => {
         nb_scenarios => 'count',     # my $nb = $db->nb_scenarios;
         add          => 'push',      # $db->add( $scenario, $scenario );
+        clear        => 'clear',     # $db->clear;
     }
 );
 
@@ -34,11 +35,23 @@ has scenarios => (
  # -- public methods
   
 =method add
-    
+
     my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
     $db->add( @scenarios );
 
 Store a new scenario in the scenarios database.
+
+=cut
+
+# implemented by the 'Array' trait of the 'scenarios' attribute.
+
+
+=method clear
+
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    $db->clear;
+
+Remove all scenarios from the database.
 
 =cut
 
