@@ -6,29 +6,30 @@ package WWW::DaysOfWonder::Memoir44::DB::Scenarios;
 # ABSTRACT: scenarios database
 
 use JSON;
-use Moose;
+use MooseX::Singleton;
 use MooseX::Has::Sugar;
-use MooseX::Storage;
+use MooseX::SemiAffordanceAccessor;
 use Path::Class;
+use Storable qw{ nstore retrieve };
 
 use WWW::DaysOfWonder::Memoir44::Utils;
 
 
-with Storage( format => 'JSON', io => 'File' );
-
-my $dbfile = DATADIR->file( "scenarios.json" );
+my $dbfile = DATADIR->file( "scenarios.store" );
 
 has scenarios => (
     traits     => ['Array'],
-    is         => 'ro',
+    is         => 'rw',
     isa        => 'ArrayRef[WWW::DaysOfWonder::Memoir44::Scenario]',
     default    => sub { [] },
     auto_deref => 1,
+    writer     => '_set_scenarios',
     handles    => {
-        nb_scenarios => 'count',     # my $nb = $db->nb_scenarios;
-        add          => 'push',      # $db->add( $scenario, $scenario );
-        clear        => 'clear',     # $db->clear;
-        grep         => 'grep',
+        nb_scenarios  => 'count',     # my $nb = $db->nb_scenarios;
+        add           => 'push',      # $db->add( $scenario, $scenario );
+        clear         => 'clear',     # $db->clear;
+        grep          => 'grep',
+        all_scenarios => 'elements',
     }
 );
 
@@ -69,7 +70,10 @@ the distrib, no need for you to say where it's located.
 =cut
 
 sub read {
-    return __PACKAGE__->load( $dbfile->stringify );
+    my $self = shift;
+
+    my $scenarios_ref = retrieve( $dbfile->stringify );
+    $self->_set_scenarios( $scenarios_ref );
 }
 
 
@@ -85,7 +89,8 @@ the distrib, no need for you to say where it's located.
 
 sub write {
     my $self = shift;
-    $self->store( $dbfile->stringify );
+    my @scenarios = $self->scenarios;
+    nstore( \@scenarios, $dbfile->stringify );
 }
 
 1;

@@ -7,10 +7,7 @@ package WWW::DaysOfWonder::Memoir44::Scenario;
 
 use Moose;
 use MooseX::Has::Sugar;
-use MooseX::Storage;
 use Perl6::Form;
-
-with Storage;
 
 use overload q{""} => 'as_string';
 

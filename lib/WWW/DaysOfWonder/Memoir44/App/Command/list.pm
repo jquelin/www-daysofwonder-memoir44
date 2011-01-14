@@ -45,7 +45,8 @@ sub execute {
     }
     my $grep = "sub { " . join(" & ", (1,@clauses)) . " }";
     $grep = eval $grep;
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->read;
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    $db->read;
 
 
     my @scenarios = $db->grep( $grep );
