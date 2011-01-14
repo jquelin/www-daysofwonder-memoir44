@@ -53,7 +53,7 @@ sub execute {
 
     # display the results
     foreach my $s ( @scenarios ) {
-        print encode( 'utf-8', $s );
+        say encode( 'utf-8', $s );
     }
 }
 

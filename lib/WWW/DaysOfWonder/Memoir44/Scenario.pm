@@ -7,9 +7,10 @@ package WWW::DaysOfWonder::Memoir44::Scenario;
 
 use Moose;
 use MooseX::Has::Sugar;
-use Perl6::Form;
+use Text::Truncate;
 
 use overload q{""} => 'as_string';
+
 
 
 =attr my $int = $scenario->id;
@@ -119,35 +120,47 @@ doing stuff like:
 sub as_string {
     my $s = shift;
 
-    # create the form holding the line definition
-    my $form = join ' ',
-        '{>>>>}.',                # id
-        '{<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<}',  # name
-        '{<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<}',      # operation
-        '{|||||||||||}',          # front
-        '{||||||}',               # format
-        '{|||||}',                # board
-        '{||||||||||}',           # author
-        '{||||||||}',             # source
-        '{<<<<<<<<}',             # updated
-        '{|}',                    # rating
-        '{}',                     # terrain pack
-        '{}',                     # east front
-        '{}',                     # pacific theater
-        '{}',                     # mediterranean theater
-        '{}',                     # air pack
-        ;
+    my $out = join " ", qw{
+        R6id. L38name L34operation
+        C13front C8format C7board
+        C12author C10source L10updated C3rating_as_star
+        L2tp L2ef L2pt L2mt L2ap
+    };
+    $out =~ s/([RCL])(\d+)(\w+)/$s->_format($1,$2,$3)/eg;
+    return $out;
+}
 
-    # return the formatted scenario
-    return form $form,
-        $s->id, $s->name, $s->operation, $s->front, $s->format, $s->board,
-        $s->author, $s->source, $s->updated, '*'x$s->rating,
-        $s->need_tp ? 'tp' : '',
-        $s->need_ef ? 'ef' : '',
-        $s->need_pt ? 'pt' : '',
-        $s->need_mt ? 'mt' : '',
-        $s->need_ap ? 'ap' : '',
-        ;
+sub rating_as_star { my $s=shift; '*'x$s->rating; }
+sub tp { my $s=shift; $s->need_tp ? 'tp' : ''; }
+sub ef { my $s=shift; $s->need_ef ? 'ef' : ''; }
+sub pt { my $s=shift; $s->need_pt ? 'pt' : ''; }
+sub mt { my $s=shift; $s->need_mt ? 'mt' : ''; }
+sub ap { my $s=shift; $s->need_ap ? 'ap' : ''; }
+
+sub _format {
+    my ($self, $align, $maxlength, $method) = @_;
+    my $str = $self->$method;
+
+    # empty string: easy bunny
+    return " " x $maxlength if length($str) == 0;
+
+    # don't fill more than what's required
+    my $ELLIPSIS = "\x{2026}";
+    $str = truncstr( $str, $maxlength, $ELLIPSIS );
+
+    # fill up according to the requirements
+    given ( $align ) {
+        when ( "L" ) { return sprintf "%-${maxlength}s", $str; }
+        when ( "R" ) { return sprintf "%${maxlength}s",  $str; }
+
+        when ( "C" ) {
+            my $diff = $maxlength - length($str);
+            return $str if $diff == 0;
+            $str  = " " x ($diff/2) . $str . " " x ($diff/2);
+            $str .= " " if $diff % 2;
+            return $str;
+        }
+    }
 }
 
 1;
