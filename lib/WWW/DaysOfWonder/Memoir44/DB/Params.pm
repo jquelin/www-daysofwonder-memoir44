@@ -1,0 +1,28 @@
+use 5.012;
+use strict;
+use warnings;
+
+package WWW::DaysOfWonder::Memoir44::DB::Params;
+# ABSTRACT: various runtime params
+
+use Config::Tiny;
+use MooseX::Singleton;
+use MooseX::Has::Sugar;
+
+use WWW::DaysOfWonder::Memoir44::Utils qw{ DATADIR };
+
+
+my $params_file = DATADIR->file( "params.ini" );
+
+has _params => ( ro, isa => "Config::Tiny" );
+
+sub _build__params {
+    my $self = shift;
+    my $params = Config::Tiny->read( $params_file );
+    $params  //= {};
+    return $params;
+}
+
+1;
+__END__
+
