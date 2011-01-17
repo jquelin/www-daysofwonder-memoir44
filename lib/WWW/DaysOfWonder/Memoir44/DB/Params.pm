@@ -23,6 +23,22 @@ sub _build__params {
     return $params;
 }
 
+# -- public methods
+
+=method get
+
+    my $value = $params->get( $section, $key );
+
+Return the value associated to C<$key> in the wanted C<$section>.
+
+=cut
+
+sub get {
+    my ($self, $section, $key) = @_;
+    return $self->_params->{ $section }->{ $key };
+}
+
+
 1;
 __END__
 
@@ -38,7 +54,7 @@ __END__
 This module allows to store various runtime parameters.
 
 It implements a singleton responsible for automatic retrieving & saving
-of the various information. It is B<not> responsible for the proper
-parameters hierarchy.
+of the various information. It is responsible neither for the proper
+parameters hierarchy, nor for the uniqueness of this hierarchy.
 
 
