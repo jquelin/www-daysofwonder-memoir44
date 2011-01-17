@@ -5,10 +5,8 @@ use warnings;
 package WWW::DaysOfWonder::Memoir44::DB::Scenarios;
 # ABSTRACT: scenarios database
 
-use JSON;
 use MooseX::Singleton;
 use MooseX::Has::Sugar;
-use MooseX::SemiAffordanceAccessor;
 use Path::Class;
 use Storable qw{ nstore retrieve };
 
@@ -28,8 +26,7 @@ has scenarios => (
         nb_scenarios  => 'count',     # my $nb = $db->nb_scenarios;
         add           => 'push',      # $db->add( $scenario, $scenario );
         clear         => 'clear',     # $db->clear;
-        grep          => 'grep',
-        all_scenarios => 'elements',
+        grep          => 'grep',      # $db->grep( sub { $_->need_ef });
     }
 );
 
