@@ -8,7 +8,6 @@ package WWW::DaysOfWonder::Memoir44::Utils;
 use File::HomeDir::PathClass;
 use Sub::Exporter -setup => {
     exports => [ qw{ DATADIR } ],
-    groups =>  { default => [ qw{ DATADIR } ] },
 };
 
 
@@ -21,8 +20,6 @@ use Sub::Exporter -setup => {
 
 Return a L<Path::Class> object containing the data directory for the
 distribution. The directory will be created if needed.
-
-The sub is exported by default.
 
 =cut
 
@@ -38,3 +35,4 @@ __END__
 =head1 DESCRIPTION
 
 This module exports various subs used in the dist.
+
