@@ -14,12 +14,12 @@ use WWW::DaysOfWonder::Memoir44::Utils qw{ DATADIR };
 
 my $params_file = DATADIR->file( "params.ini" );
 
-has _params => ( ro, isa => "Config::Tiny" );
+has _params => ( ro, isa => "Config::Tiny", lazy_build );
 
 sub _build__params {
     my $self = shift;
     my $params = Config::Tiny->read( $params_file );
-    $params  //= {};
+    $params  //= Config::Tiny->new;
     return $params;
 }
 
