@@ -35,7 +35,7 @@ has scenarios => (
   
 =method add
 
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->new;
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
     $db->add( @scenarios );
 
 Store a new scenario in the scenarios database.
@@ -47,7 +47,7 @@ Store a new scenario in the scenarios database.
 
 =method clear
 
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->new;
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
     $db->clear;
 
 Remove all scenarios from the database.
@@ -62,7 +62,7 @@ Remove all scenarios from the database.
     my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->read;
 
 Read the whole scenarios database from a file. The file is internal to
-the distrib, no need for you to say where it's located.
+the distrib, and stored in a private directory.
 
 =cut
 
@@ -76,11 +76,11 @@ sub read {
 
 =method write
 
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->new;
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
     $db->write;
 
 Store the whole scenarios database to a file. The file is internal to
-the distrib, no need for you to say where it's located.
+the distrib, and stored in a private directory.
 
 =cut
 
@@ -92,3 +92,19 @@ sub write {
 
 1;
 __END__
+
+=head1 SYNOPSIS
+
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    $db->read;
+    my @top_scenarios = $db->grep( sub { $_->rating == 3 } );
+    $db->clear;
+    $db->add( @top_scenarios );
+    $db->write;
+
+
+=head1 DESCRIPTION
+
+This class implements a singleton holding all the scenarios available.
+It is the core of the whole distribution.
+
