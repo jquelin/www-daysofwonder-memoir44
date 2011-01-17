@@ -16,11 +16,10 @@ use WWW::DaysOfWonder::Memoir44::Utils qw{ DATADIR };
 my $dbfile = DATADIR->file( "scenarios.store" );
 
 has scenarios => (
+    rw, auto_deref,
     traits     => ['Array'],
-    is         => 'rw',
     isa        => 'ArrayRef[WWW::DaysOfWonder::Memoir44::Scenario]',
     default    => sub { [] },
-    auto_deref => 1,
     writer     => '_set_scenarios',
     handles    => {
         nb_scenarios  => 'count',     # my $nb = $db->nb_scenarios;
