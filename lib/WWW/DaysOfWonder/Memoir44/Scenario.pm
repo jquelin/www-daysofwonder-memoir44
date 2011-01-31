@@ -130,6 +130,36 @@ sub as_string {
     return $out;
 }
 
+=method tp
+
+=method ef
+
+=method pt
+
+=method mt
+
+=method ap
+
+    my $str = $scenario->tp;
+    my $str = $scenario->ef;
+    my $str = $scenario->pt;
+    my $str = $scenario->mt;
+    my $str = $scenario->ap;
+
+
+Those five methods return either an empty string or the abbreviation of
+the expansion depending on the value of the C<need_XX> boolean attribute
+of the C<$scenario>. They are useful for display purposes.
+
+=method rating_as_star
+
+    my $str = $scenario->rating_as_star;
+
+Return a string of 0 to 3 stars C<*> depending on the C<rating>
+attribute of the C<$scenario>.
+
+=cut
+
 sub rating_as_star { my $s=shift; '*'x$s->rating; }
 sub tp { my $s=shift; $s->need_tp ? 'tp' : ''; }
 sub ef { my $s=shift; $s->need_ef ? 'ef' : ''; }
