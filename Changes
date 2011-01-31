@@ -2,6 +2,14 @@ Changelog for WWW-DaysOfWonder-Memoir44
 
 {{$NEXT}}
 
+2.110310  2011-01-31 19:10:31 Europe/Paris
+ - using a plain storable file instead of a sqlite db, for faster
+   results and easier programming. this requires to re-run "update"
+   command.
+ - new command available: list (to see available scenarios)
+
+**
+
 1.100140  2010-01-14 14:22:36 Europe/Paris
  - initial release
  - update command working
