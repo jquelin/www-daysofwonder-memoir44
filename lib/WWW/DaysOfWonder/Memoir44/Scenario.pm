@@ -12,6 +12,7 @@ use Text::Truncate;
 use overload q{""} => 'as_string';
 
 
+# -- public attributes
 
 =attr my $int = $scenario->id;
 
@@ -107,7 +108,9 @@ has need_cb   => ( rw, isa=>'Bool' );
 
 # -- public methods
 
-=method my $str = $scenario->as_string;
+=method as_string
+
+    my $str = $scenario->as_string;
 
 Return a line (with a final \n) dumping the scenario and all its
 attributes. It is also the method called for stringification, eg when
@@ -166,6 +169,10 @@ sub ef { my $s=shift; $s->need_ef ? 'ef' : ''; }
 sub pt { my $s=shift; $s->need_pt ? 'pt' : ''; }
 sub mt { my $s=shift; $s->need_mt ? 'mt' : ''; }
 sub ap { my $s=shift; $s->need_ap ? 'ap' : ''; }
+
+
+# -- private methods
+
 
 sub _format {
     my ($self, $align, $maxlength, $method) = @_;
