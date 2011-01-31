@@ -7,7 +7,7 @@ package WWW::DaysOfWonder::Memoir44::Scenario;
 
 use Moose;
 use MooseX::Has::Sugar;
-use Text::Truncate;
+use Text::Padding;
 
 use overload q{""} => 'as_string';
 
@@ -173,30 +173,17 @@ sub ap { my $s=shift; $s->need_ap ? 'ap' : ''; }
 
 # -- private methods
 
-
+# $pad should not be re-created for each display
+my $pad = Text::Padding->new;
 sub _format {
     my ($self, $align, $maxlength, $method) = @_;
     my $str = $self->$method;
 
-    # empty string: easy bunny
-    return " " x $maxlength if length($str) == 0;
-
-    # don't fill more than what's required
-    my $ELLIPSIS = "\x{2026}";
-    $str = truncstr( $str, $maxlength, $ELLIPSIS );
-
     # fill up according to the requirements
     given ( $align ) {
-        when ( "L" ) { return sprintf "%-${maxlength}s", $str; }
-        when ( "R" ) { return sprintf "%${maxlength}s",  $str; }
-
-        when ( "C" ) {
-            my $diff = $maxlength - length($str);
-            return $str if $diff == 0;
-            $str  = " " x ($diff/2) . $str . " " x ($diff/2);
-            $str .= " " if $diff % 2;
-            return $str;
-        }
+        when ( "L" ) { return $pad->left  ($str, $maxlength); }
+        when ( "R" ) { return $pad->right ($str, $maxlength); }
+        when ( "C" ) { return $pad->center($str, $maxlength); }
     }
 }
 
