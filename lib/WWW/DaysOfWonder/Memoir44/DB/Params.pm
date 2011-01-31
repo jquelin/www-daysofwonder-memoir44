@@ -27,28 +27,30 @@ sub _build__params {
 
 =method get
 
-    my $value = $params->get( $section, $key );
+    my $value = $params->get( $key );
 
-Return the value associated to C<$key> in the wanted C<$section>.
+Return the value associated to C<$key> in the wanted section.
 
 =cut
 
 sub get {
-    my ($self, $section, $key) = @_;
+    my ($self, $key) = @_;
+    my $section = scalar caller;
     return $self->_params->{ $section }->{ $key };
 }
 
 
 =method set
 
-    $params->set( $section, $key, $value );
+    $params->set( $key, $value );
 
-Store the C<$value> associated to C<$key> in the wanted C<$section>.
+Store the C<$value> associated to C<$key> in the wanted section.
 
 =cut
 
 sub set {
-    my ($self, $section, $key, $value) = @_;
+    my ($self, $key, $value) = @_;
+    my $section = scalar caller;
     my $params = $self->_params;
     $params->{ $section }->{ $key } = $value;
     $params->write( $params_file );
@@ -61,8 +63,8 @@ __END__
 =head1 SYNOPSIS
 
     my $params = WWW::DaysOfWonder::Memoir44::DB::Params->instance;
-    my $value  = $params->get( $section, $key );
-    $params->set( $section, $key, $value );
+    my $value  = $params->get( $key );
+    $params->set( $key, $value );
 
 
 =head1 DESCRIPTION
@@ -70,7 +72,6 @@ __END__
 This module allows to store various runtime parameters.
 
 It implements a singleton responsible for automatic retrieving & saving
-of the various information. It is responsible neither for the proper
-parameters hierarchy, nor for the uniqueness of this hierarchy.
-
+of the various information. Each module gets its own section, so keys
+won't be over-written if sharing the same name accross package.
 
