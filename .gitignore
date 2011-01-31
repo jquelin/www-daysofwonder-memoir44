@@ -14,5 +14,8 @@
 .build
 _build
 
+# avoid oldies
+old
+
 # avoid archives of this distribution
 WWW-DaysOfWonder-Memoir44-*
