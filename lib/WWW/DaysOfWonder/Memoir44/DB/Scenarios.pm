@@ -5,11 +5,13 @@ use warnings;
 package WWW::DaysOfWonder::Memoir44::DB::Scenarios;
 # ABSTRACT: scenarios database
 
+use DateTime;
 use MooseX::Singleton;
 use MooseX::Has::Sugar;
 use Path::Class;
 use Storable qw{ nstore retrieve };
 
+use WWW::DaysOfWonder::Memoir44::DB::Params;
 use WWW::DaysOfWonder::Memoir44::Utils qw{ DATADIR };
 
 
@@ -87,6 +89,11 @@ sub write {
     my $self = shift;
     my @scenarios = $self->scenarios;
     nstore( \@scenarios, $dbfile->stringify );
+
+    # store timestamp
+    my $params = WWW::DaysOfWonder::Memoir44::DB::Params->instance;
+    my $today  = DateTime->today->ymd;
+    $params->set( last_updated => $today );
 }
 
 1;
