@@ -39,6 +39,22 @@ sub get {
 }
 
 
+=method set
+
+    $params->set( $section, $key, $value );
+
+Store the C<$value> associated to C<$key> in the wanted C<$section>.
+
+=cut
+
+sub set {
+    my ($self, $section, $key, $value) = @_;
+    my $params = $self->_params;
+    $params->{ $section }->{ $key } = $value;
+    $params->write( $params_file );
+}
+
+
 1;
 __END__
 
