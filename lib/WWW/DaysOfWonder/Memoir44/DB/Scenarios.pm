@@ -12,10 +12,10 @@ use Path::Class;
 use Storable qw{ nstore retrieve };
 
 use WWW::DaysOfWonder::Memoir44::DB::Params;
-use WWW::DaysOfWonder::Memoir44::Utils qw{ DATADIR };
+use WWW::DaysOfWonder::Memoir44::Utils qw{ $DATADIR };
 
 
-my $dbfile = DATADIR->file( "scenarios.store" );
+my $dbfile = $DATADIR->file( "scenarios.store" );
 
 has scenarios => (
     rw, auto_deref,

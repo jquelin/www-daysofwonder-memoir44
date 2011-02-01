@@ -9,10 +9,10 @@ use Config::Tiny;
 use MooseX::Singleton;
 use MooseX::Has::Sugar;
 
-use WWW::DaysOfWonder::Memoir44::Utils qw{ DATADIR };
+use WWW::DaysOfWonder::Memoir44::Utils qw{ $DATADIR };
 
 
-my $params_file = DATADIR->file( "params.ini" );
+my $params_file = $DATADIR->file( "params.ini" );
 
 has _params => ( ro, isa => "Config::Tiny", lazy_build );
 
