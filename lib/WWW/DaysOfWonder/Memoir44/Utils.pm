@@ -5,10 +5,12 @@ use warnings;
 package WWW::DaysOfWonder::Memoir44::Utils;
 # ABSTRACT: various subs and constants used in the dist
 
-use File::HomeDir::PathClass;
+use Encode;
 use Exporter::Lite;
+use File::HomeDir::PathClass;
+use Locale::TextDomain          'WWW-DaysOfWonder-Memoir44';
 
-our @EXPORT_OK = qw{ $DATADIR };
+our @EXPORT_OK = qw{ $DATADIR T };
 
 
 # -- public vars
@@ -16,7 +18,19 @@ our @EXPORT_OK = qw{ $DATADIR };
 our $DATADIR = File::HomeDir::PathClass->my_dist_data(
         'WWW-DaysOfWonder-Memoir44', { create => 1 } );
 
+
 # -- public subs
+
+=method my $locstr = T( $string )
+
+Performs a call to C<gettext> on C<$string>, convert it from utf8 and
+return the result. Note that i18n is using C<Locale::TextDomain>
+underneath, so refer to this module for more information.
+
+=cut
+
+sub T { return decode('utf8', __($_[0])); }
+
 
 1;
 __END__
