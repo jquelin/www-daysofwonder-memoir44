@@ -43,7 +43,7 @@ sub execute {
     # remove all existing scenarios from db
     $db->clear;
 
-    foreach my $source ( qw{ game approved public } ) {
+    foreach my $source ( qw{ game approved classified public } ) {
         # create the source url
         my $url = WWW::DaysOfWonder::Memoir44::Url->new({source=>$source});
         say "* updating $source scenarios";
