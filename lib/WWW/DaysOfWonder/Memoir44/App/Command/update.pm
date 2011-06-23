@@ -138,7 +138,7 @@ sub _scenario_data_from_html_row {
     );
 
     # extract values and fill in the hash
-    my $link = $cells[9]->find_by_tag_name('a')->attr('href');
+    my $link = $cells[0]->find_by_tag_name('a')->attr('href');
     ($data{id}) = ($link =~ /id=(\d+)/);
     $data{name}      = trim($cells[0]->as_text);
     $data{operation} = trim($cells[2]->as_text);
