@@ -49,7 +49,7 @@ sub _build__uri {
     # eg: selpack_tp=1&selpack_ef=2
     my %options = (
         start      => 0,
-        page_limit => 2000,
+        page_limit => 5000,
         status     => $self->source,
     );
 
