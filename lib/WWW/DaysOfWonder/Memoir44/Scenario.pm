@@ -103,6 +103,7 @@ has need_pt   => ( rw, isa=>'Bool' );
 has need_ap   => ( rw, isa=>'Bool' );
 has need_bm   => ( rw, isa=>'Bool' );
 has need_cb   => ( rw, isa=>'Bool' );
+has languages => ( rw, isa=>'ArrayRef[Str]', auto_deref );
 
 
 
@@ -127,7 +128,7 @@ sub as_string {
         R6id. L38name L34operation
         C13front C8format C7board
         C12author C10source L10updated C3rating_as_star
-        L2tp L2ef L2pt L2mt L2ap
+        L2tp L2ef L2pt L2mt L2ap L8langs
     };
     $out =~ s/([RCL])(\d+)(\w+)/$s->_format($1,$2,$3)/eg;
     return $out;
@@ -154,6 +155,13 @@ Those five methods return either an empty string or the abbreviation of
 the expansion depending on the value of the C<need_XX> boolean attribute
 of the C<$scenario>. They are useful for display purposes.
 
+=method langs
+
+    my $str = $scenario->langs;
+
+Return a string with existing language versions this scenario separated
+by commas. eg C<en,fr>.
+
 =method rating_as_star
 
     my $str = $scenario->rating_as_star;
@@ -163,6 +171,7 @@ attribute of the C<$scenario>.
 
 =cut
 
+sub langs { my $s=shift; return join ",", $s->languages; }
 sub rating_as_star { my $s=shift; '*'x$s->rating; }
 sub tp { my $s=shift; $s->need_tp ? 'tp' : ''; }
 sub ef { my $s=shift; $s->need_ef ? 'ef' : ''; }

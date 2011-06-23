@@ -149,13 +149,18 @@ sub _scenario_data_from_html_row {
     my $updated = trim($cells[5]->as_text);                    # dd/mm/yyyy
     $data{updated}   = join '-', reverse split /\//, $updated; # yyyy-mm-dd
 
-    # fill in booleans
+    # fill in langs, board & booleans
+    # - langs
     my @subcells = $cells[8]->find_by_tag_name('td');
+    my @langs = map { $_->attr('alt') } $subcells[1]->find_by_tag_name('img');
+    $data{languages} = \@langs;
+    # - board types
     my $boardimg = $subcells[2]->find_by_tag_name('img')->attr('src');
     $boardimg =~ /mm_board_([^_]+)_([^.]+)\.gif/
         or die "unknwon board image: $boardimg";
     $data{format} = $1;
     $data{board}  = $2;
+    # - booleans
     my @imgs =
         map { $_->attr('src') }
         $subcells[3]->find_by_tag_name('img');
