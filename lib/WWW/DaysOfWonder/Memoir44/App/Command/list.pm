@@ -9,6 +9,7 @@ use Encode qw{ encode };
 
 use WWW::DaysOfWonder::Memoir44::App -command;
 use WWW::DaysOfWonder::Memoir44::DB::Scenarios;
+use WWW::DaysOfWonder::Memoir44::Filter;
 
 
 # -- public methods
@@ -36,19 +37,12 @@ sub execute {
     my ($self, $opts, $args) = @_;
 
     # prepare the filter
-    my @clauses;
-    foreach my $expansion ( qw{ tp ef pt mt ap } ) {
-        next unless defined $opts->{$expansion};
-        my $clause = '$_->need_';
-        $clause    = "!$clause" unless $opts->{$expansion};
-        push @clauses, $clause . $expansion;
-    }
-    my $grep = "sub { " . join(" & ", (1,@clauses)) . " }";
-    $grep = eval $grep;
+    my $filter = WWW::DaysOfWonder::Memoir44::Filter->new_with_options;
+    my $grep   = $filter->as_grep_clause;
+
+    # fetch the scenarios
     my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
     $db->read;
-
-
     my @scenarios = $db->grep( $grep );
 
     # display the results
@@ -57,10 +51,8 @@ sub execute {
     }
 }
 
-
 1;
 __END__
-
 
 =head1 DESCRIPTION
 
