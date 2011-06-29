@@ -95,7 +95,7 @@ has front     => ( rw, isa=>'Str' );
 has author    => ( rw, isa=>'Str' );
 has board     => ( rw, isa=>'Str' );
 has format    => ( rw, isa=>'Str' );
-has source    => ( rw, isa=>'Str' );
+has source    => ( rw, isa=>'Source' );
 has need_tp   => ( rw, isa=>'Bool' );
 has need_ef   => ( rw, isa=>'Bool' );
 has need_mt   => ( rw, isa=>'Bool' );
