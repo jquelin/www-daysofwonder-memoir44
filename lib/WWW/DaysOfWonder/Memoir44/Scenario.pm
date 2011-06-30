@@ -201,7 +201,5 @@ __END__
 
 =head1 DESCRIPTION
 
-This module represents a scenario with all its attributes. It implements
-L<MooseX::Storage> role, and therefore methods C<pack()> and C<unpack()>
-are available.
+This module represents a scenario with all its attributes.
 
