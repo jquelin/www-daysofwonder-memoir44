@@ -71,6 +71,22 @@ has bm   => ( rw, isa=>'Bool' );
 has cb   => ( rw, isa=>'Bool' );
 
 
+=attr languages
+
+Languages accepted for a scenario (if multiple entries, only one of them
+need to match). Aliases: C<lang> or C<l>.
+
+=cut
+
+has languages => (
+    rw, auto_deref,
+    isa           => 'ArrayRef[Str]',
+    predicate     => 'has_languages',
+    traits        => [ qw{ Getopt } ],
+    cmd_aliases   => [ qw{ lang l } ],
+);
+
+
 # -- public methods
 
 =method as_grep_clause
@@ -92,6 +108,15 @@ sub as_grep_clause {
         $clause    = "!$clause" unless $self->$expansion;
         push @clauses, $clause . $expansion;
     }
+
+    # filtering on languages
+    if ( $self->has_languages ) {
+        my $clause  = 'join(",",$_->languages) =~ /\Q';
+        $clause .= join "\\E|\\Q", $self->languages;
+        $clause .= '\E/';
+        push @clauses, $clause;
+    }
+
     my $grep = "sub { " . join(" && ", (1,@clauses)) . " }";
     return eval $grep;
 }
