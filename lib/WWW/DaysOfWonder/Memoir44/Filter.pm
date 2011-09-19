@@ -12,7 +12,25 @@ use MooseX::SemiAffordanceAccessor;
 with 'MooseX::Getopt::GLD';
 
 
+use WWW::DaysOfWonder::Memoir44::Types;
+
+
 # -- public attributes
+
+=attr rating
+
+Minimum scenario rating (integer between 0 and 3). Aliases: C<rate> or
+C<r>.
+
+=cut
+
+has rating => (
+    rw, coerce,
+    isa           => 'Int_0_3',
+    predicate     => 'has_rating',
+    traits        => [ qw{ Getopt } ],
+    cmd_aliases   => [ qw{ rate r } ],
+);
 
 =attr my $bool = $scenario->tp;
 
@@ -61,8 +79,13 @@ has cb   => ( rw, isa=>'Bool' );
 
 sub as_grep_clause {
     my $self = shift;
-
     my @clauses;
+
+    # filtering on scenario information
+    push @clauses, '$_->rating >= ' . $self->rating
+        if $self->has_rating;
+
+    # filtering on extensions
     foreach my $expansion ( qw{ tp ef pt mt ap } ) {
         next unless defined $self->$expansion;
         my $clause = '$_->need_';

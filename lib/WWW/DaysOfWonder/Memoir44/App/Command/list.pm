@@ -24,6 +24,8 @@ sub opt_spec {
     my $self = shift;
     return (
         [],
+        [ 'rating|r=i' => 'minimum rating' ],
+        [],
         [ 'list only scenario that need extension:' ],
         [ 'tp!' => 'terrain pack          (--notp to negate)' ],
         [ 'ef!' => 'east front            (--noef to negate)' ],

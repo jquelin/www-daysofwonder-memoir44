@@ -90,7 +90,7 @@ has id        => ( rw, isa=>'Int', required );
 has name      => ( rw, isa=>'Str', required );
 has operation => ( rw, isa=>'Str' );
 has updated   => ( rw, isa=>'Str', required );
-has rating    => ( rw, isa=>'Int' );
+has rating    => ( rw, isa=>'Int_0_3' );
 has front     => ( rw, isa=>'Str' );
 has author    => ( rw, isa=>'Str' );
 has board     => ( rw, isa=>'Str' );
