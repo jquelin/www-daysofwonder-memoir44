@@ -26,6 +26,10 @@ Alias: C<i>.
 
 Scenario name. Alias: C<n>.
 
+=attr operation
+
+Scenario operation. Alias: C<o>.
+
 =attr format
 
 Scenario format. Aliases: C<fmt> or C<f>.
@@ -50,6 +54,14 @@ has name => (
     predicate     => 'has_name',
     traits        => [ qw{ Getopt } ],
     cmd_aliases   => [ qw{ n } ],
+);
+
+has operation => (
+    rw,
+    isa           => 'Str',
+    predicate     => 'has_operation',
+    traits        => [ qw{ Getopt } ],
+    cmd_aliases   => [ qw{ o } ],
 );
 
 has format => (
@@ -157,6 +169,10 @@ sub as_grep_clause {
     # - name
     push @clauses, '$_->name =~ qr{' . $self->name . '}i'
         if $self->has_name;
+
+    # - operation
+    push @clauses, '$_->operation =~ qr{' . $self->operation . '}i'
+        if $self->has_operation;
 
     # - format
     push @clauses, '$_->format eq q{' . $self->format . '}'
