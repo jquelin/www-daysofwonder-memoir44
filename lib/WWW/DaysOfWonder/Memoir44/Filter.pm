@@ -22,6 +22,10 @@ use WWW::DaysOfWonder::Memoir44::Types;
 Scenario id (if multiple entries, only one of them need to match).
 Alias: C<i>.
 
+=attr name
+
+Scenario name. Alias: C<n>.
+
 =attr format
 
 Scenario format. Aliases: C<fmt> or C<f>.
@@ -38,6 +42,14 @@ has ids => (
     predicate     => 'has_ids',
     traits        => [ qw{ Getopt } ],
     cmd_aliases   => [ qw{ i } ],
+);
+
+has name => (
+    rw,
+    isa           => 'Str',
+    predicate     => 'has_name',
+    traits        => [ qw{ Getopt } ],
+    cmd_aliases   => [ qw{ n } ],
 );
 
 has format => (
@@ -141,6 +153,10 @@ sub as_grep_clause {
         my $clause = join( '||', map { "\$_->id == $_" } $self->ids );
         push @clauses, "($clause)";
     }
+
+    # - name
+    push @clauses, '$_->name =~ qr{' . $self->name . '}i'
+        if $self->has_name;
 
     # - format
     push @clauses, '$_->format eq q{' . $self->format . '}'

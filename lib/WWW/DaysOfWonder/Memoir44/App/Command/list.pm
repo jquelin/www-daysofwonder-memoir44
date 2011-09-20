@@ -25,9 +25,10 @@ sub opt_spec {
     return (
         [],
         [ 'scenario information:' ],
-        [ 'id|i=i'         => 'scenario id (can be repeated)' ],
-        [ 'format|fmt|f=s' => 'scenario format' ],
-        [ 'board|b=s'      => 'scenario board'  ],
+        [ 'id|i=i'         => 'scenario id (can be repeated)'              ],
+        [ 'name|n=s'       => 'scenario name (treated as a no-case regex)' ],
+        [ 'format|fmt|f=s' => 'scenario format'                            ],
+        [ 'board|b=s'      => 'scenario board'                             ],
         [],
         [ 'extensions needed:' ],
         [ 'tp!' => 'terrain pack          (--notp to negate)' ],
