@@ -17,20 +17,20 @@ use WWW::DaysOfWonder::Memoir44::Types;
 
 # -- public attributes
 
-=attr rating
+=attr format
 
-Minimum scenario rating (integer between 0 and 3). Aliases: C<rate> or
-C<r>.
+Scenario format. Aliases: C<fmt> or C<f>.
 
 =cut
 
-has rating => (
-    rw, coerce,
-    isa           => 'Int_0_3',
-    predicate     => 'has_rating',
+has format => (
+    rw,
+    isa           => 'Format',
+    predicate     => 'has_format',
     traits        => [ qw{ Getopt } ],
-    cmd_aliases   => [ qw{ rate r } ],
+    cmd_aliases   => [ qw{ fmt f } ],
 );
+
 
 =attr my $bool = $scenario->tp;
 
@@ -76,6 +76,11 @@ has cb   => ( rw, isa=>'Bool' );
 Languages accepted for a scenario (if multiple entries, only one of them
 need to match). Aliases: C<lang> or C<l>.
 
+=attr rating
+
+Minimum scenario rating (integer between 0 and 3). Aliases: C<rate> or
+C<r>.
+
 =cut
 
 has languages => (
@@ -84,6 +89,14 @@ has languages => (
     predicate     => 'has_languages',
     traits        => [ qw{ Getopt } ],
     cmd_aliases   => [ qw{ lang l } ],
+);
+
+has rating => (
+    rw, coerce,
+    isa           => 'Int_0_3',
+    predicate     => 'has_rating',
+    traits        => [ qw{ Getopt } ],
+    cmd_aliases   => [ qw{ rate r } ],
 );
 
 
@@ -98,8 +111,9 @@ sub as_grep_clause {
     my @clauses;
 
     # filtering on scenario information
-    push @clauses, '$_->rating >= ' . $self->rating
-        if $self->has_rating;
+    # - format
+    push @clauses, '$_->format eq q{' . $self->format . '}'
+        if $self->has_format;
 
     # filtering on extensions
     foreach my $expansion ( qw{ tp ef pt mt ap } ) {
@@ -109,13 +123,18 @@ sub as_grep_clause {
         push @clauses, $clause . $expansion;
     }
 
-    # filtering on languages
+    # filtering on meta-information
+    # - languages
     if ( $self->has_languages ) {
         my $clause  = 'join(",",$_->languages) =~ /\Q';
         $clause .= join "\\E|\\Q", $self->languages;
         $clause .= '\E/';
         push @clauses, $clause;
     }
+
+    # - rating
+    push @clauses, '$_->rating >= ' . $self->rating
+        if $self->has_rating;
 
     my $grep = "sub { " . join(" && ", (1,@clauses)) . " }";
     return eval $grep;

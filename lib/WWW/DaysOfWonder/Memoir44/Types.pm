@@ -8,7 +8,7 @@ package WWW::DaysOfWonder::Memoir44::Types;
 use Moose::Util::TypeConstraints;
 
 #enum Board  => qw{ beach country winter desert };
-#enum Format => qw{ standard brkthru overlord };
+enum Format => qw{ standard brkthru overlord };
 enum Source => qw{ game approved classified public };
 
 subtype 'Int_0_3',
@@ -32,11 +32,14 @@ The exported types are:
 
 =over 4
 
+=item Format - the scenario format. Can be one of C<standard>,
+C<brkthru> or C<overlord>.
+
+=item Int_0_3 - an integer with value 0, 1, 2 or 3.
+
 =item Source - the scenario source. Can be one of C<game> (shipped with
 the board game itself), C<classified> (printed by days of wonders),
 C<approved> (officially approved by days of wonder) and C<public>
 (provided by other users).
-
-=item Int_0_3 - an integer with value 0, 1, 2 or 3.
 
 =back

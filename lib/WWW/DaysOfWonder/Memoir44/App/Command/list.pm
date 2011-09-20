@@ -24,15 +24,19 @@ sub opt_spec {
     my $self = shift;
     return (
         [],
-        [ 'rating|r=i'         => 'minimum rating' ],
-        [ 'languages|lang|l=s' => 'languages of the scenario (can be repeated)' ],
+        [ 'scenario information:' ],
+        [ 'format|fmt|f=s' => 'scenario format' ],
         [],
-        [ 'list only scenario that need extension:' ],
+        [ 'extensions needed:' ],
         [ 'tp!' => 'terrain pack          (--notp to negate)' ],
         [ 'ef!' => 'east front            (--noef to negate)' ],
         [ 'pt!' => 'pacific theater       (--nopt to negate)' ],
         [ 'mt!' => 'mediterranean theater (--nomt to negate)' ],
         [ 'ap!' => 'air pack              (--noap to negate)' ],
+        [],
+        [ 'scenario meta-information:' ],
+        [ 'rating|r=i'         => 'minimum rating' ],
+        [ 'languages|lang|l=s' => 'languages of the scenario (can be repeated)' ],
     );
 }
 
