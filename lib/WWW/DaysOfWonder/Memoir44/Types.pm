@@ -7,7 +7,7 @@ package WWW::DaysOfWonder::Memoir44::Types;
 
 use Moose::Util::TypeConstraints;
 
-#enum Board  => qw{ beach country winter desert };
+enum Board  => qw{ beach country winter desert };
 enum Format => qw{ standard brkthru overlord };
 enum Source => qw{ game approved classified public };
 
@@ -31,6 +31,9 @@ distribution.
 The exported types are:
 
 =over 4
+
+=item Board - the scenario board. Can be one of C<beach>, C<country>,
+C<winter> or C<desert>.
 
 =item Format - the scenario format. Can be one of C<standard>,
 C<brkthru> or C<overlord>.

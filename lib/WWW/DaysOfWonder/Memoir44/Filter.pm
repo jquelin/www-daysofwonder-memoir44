@@ -21,6 +21,10 @@ use WWW::DaysOfWonder::Memoir44::Types;
 
 Scenario format. Aliases: C<fmt> or C<f>.
 
+=attr board
+
+Scenario board. Alias: C<b>.
+
 =cut
 
 has format => (
@@ -29,6 +33,14 @@ has format => (
     predicate     => 'has_format',
     traits        => [ qw{ Getopt } ],
     cmd_aliases   => [ qw{ fmt f } ],
+);
+
+has board => (
+    rw,
+    isa           => 'Board',
+    predicate     => 'has_board',
+    traits        => [ qw{ Getopt } ],
+    cmd_aliases   => [ qw{ b } ],
 );
 
 
@@ -110,12 +122,16 @@ sub as_grep_clause {
     my $self = shift;
     my @clauses;
 
-    # filtering on scenario information
+    # ** filtering on scenario information
     # - format
     push @clauses, '$_->format eq q{' . $self->format . '}'
         if $self->has_format;
 
-    # filtering on extensions
+    # - board
+    push @clauses, '$_->board eq q{' . $self->board . '}'
+        if $self->has_board;
+
+    # ** filtering on extensions
     foreach my $expansion ( qw{ tp ef pt mt ap } ) {
         next unless defined $self->$expansion;
         my $clause = '$_->need_';
@@ -123,7 +139,7 @@ sub as_grep_clause {
         push @clauses, $clause . $expansion;
     }
 
-    # filtering on meta-information
+    # ** filtering on meta-information
     # - languages
     if ( $self->has_languages ) {
         my $clause  = 'join(",",$_->languages) =~ /\Q';

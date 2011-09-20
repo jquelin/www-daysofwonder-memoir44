@@ -93,7 +93,7 @@ has updated   => ( rw, isa=>'Str', required );
 has rating    => ( rw, isa=>'Int_0_3' );
 has front     => ( rw, isa=>'Str' );
 has author    => ( rw, isa=>'Str' );
-has board     => ( rw, isa=>'Str' );
+has board     => ( rw, isa=>'Board' );
 has format    => ( rw, isa=>'Format' );
 has source    => ( rw, isa=>'Source' );
 has need_tp   => ( rw, isa=>'Bool' );

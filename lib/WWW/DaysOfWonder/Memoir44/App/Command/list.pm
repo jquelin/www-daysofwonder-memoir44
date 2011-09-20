@@ -26,6 +26,7 @@ sub opt_spec {
         [],
         [ 'scenario information:' ],
         [ 'format|fmt|f=s' => 'scenario format' ],
+        [ 'board|b=s'      => 'scenario board'  ],
         [],
         [ 'extensions needed:' ],
         [ 'tp!' => 'terrain pack          (--notp to negate)' ],
