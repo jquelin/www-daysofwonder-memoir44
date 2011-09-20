@@ -25,6 +25,7 @@ sub opt_spec {
     return (
         [],
         [ 'scenario information:' ],
+        [ 'id|i=i'         => 'scenario id (can be repeated)' ],
         [ 'format|fmt|f=s' => 'scenario format' ],
         [ 'board|b=s'      => 'scenario board'  ],
         [],

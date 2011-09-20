@@ -17,6 +17,11 @@ use WWW::DaysOfWonder::Memoir44::Types;
 
 # -- public attributes
 
+=attr ids
+
+Scenario id (if multiple entries, only one of them need to match).
+Alias: C<i>.
+
 =attr format
 
 Scenario format. Aliases: C<fmt> or C<f>.
@@ -26,6 +31,14 @@ Scenario format. Aliases: C<fmt> or C<f>.
 Scenario board. Alias: C<b>.
 
 =cut
+
+has ids => (
+    rw, auto_deref,
+    isa           => 'ArrayRef[Int]',
+    predicate     => 'has_ids',
+    traits        => [ qw{ Getopt } ],
+    cmd_aliases   => [ qw{ i } ],
+);
 
 has format => (
     rw,
@@ -123,6 +136,12 @@ sub as_grep_clause {
     my @clauses;
 
     # ** filtering on scenario information
+    # - ids
+    if ( $self->has_ids ) {
+        my $clause = join( '||', map { "\$_->id == $_" } $self->ids );
+        push @clauses, "($clause)";
+    }
+
     # - format
     push @clauses, '$_->format eq q{' . $self->format . '}'
         if $self->has_format;
