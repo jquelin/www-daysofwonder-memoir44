@@ -64,6 +64,14 @@ has operation => (
     cmd_aliases   => [ qw{ o } ],
 );
 
+has front => (
+    rw,
+    isa           => 'Str',
+    predicate     => 'has_front',
+    traits        => [ qw{ Getopt } ],
+    cmd_aliases   => [ qw{ w } ],
+);
+
 has format => (
     rw,
     isa           => 'Format',
@@ -173,6 +181,10 @@ sub as_grep_clause {
     # - operation
     push @clauses, '$_->operation =~ qr{' . $self->operation . '}i'
         if $self->has_operation;
+
+    # - front
+    push @clauses, '$_->front =~ qr{' . $self->front . '}i'
+        if $self->has_front;
 
     # - format
     push @clauses, '$_->format eq q{' . $self->format . '}'

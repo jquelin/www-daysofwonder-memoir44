@@ -28,6 +28,7 @@ sub opt_spec {
         [ 'id|i=i'         => 'scenario id (can be repeated)'                   ],
         [ 'name|n=s'       => 'scenario name (treated as a no-case regex)'      ],
         [ 'operation|o=s'  => 'scenario operation (treated as a no-case regex)' ],
+        [ 'front|w=s'      => 'scenario front (treated as a no-case regex)'     ],
         [ 'format|fmt|f=s' => 'scenario format'                                 ],
         [ 'board|b=s'      => 'scenario board'                                  ],
         [],
