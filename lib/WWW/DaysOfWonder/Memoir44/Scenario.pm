@@ -1,8 +1,19 @@
+#
+# This file is part of WWW-DaysOfWonder-Memoir44
+#
+# This software is copyright (c) 2009 by Jerome Quelin.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 use 5.012;
 use strict;
 use warnings;
 
 package WWW::DaysOfWonder::Memoir44::Scenario;
+{
+  $WWW::DaysOfWonder::Memoir44::Scenario::VERSION = '2.120510';
+}
 # ABSTRACT: scenario object
 
 use Moose;
@@ -14,77 +25,6 @@ use overload q{""} => 'as_string';
 
 # -- public attributes
 
-=attr my $int = $scenario->id;
-
-Id of the scenario.
-
-=attr my $str = $scenario->name;
-
-Name of the scenario.
-
-=attr my $str = $scenario->operation;
-
-Operation the scenario is part of.
-
-=attr my $date = $scenario->updated;
-
-Date of last scenario update (format C<yyyy-mm-dd>).
-
-=attr my $int = $scenario->rating;
-
-Average scenario rating (1, 2 or 3).
-
-=attr my $str = $scenario->front;
-
-Front where the scenario takes place. Can be West, East,
-Mediterranean, etc.
-
-=attr my $str = $scenario->author;
-
-Who wrote the scenario.
-
-=attr my $str = $scenario->board;
-
-Country, beach, winter or desert.
-
-=attr my $str = $scenario->format;
-
-Standard, overlord or breakthru.
-
-=attr my $str = $scenario->source;
-
-Game (bundled with board game), approved (official extensions), public
-(all the other).
-
-=attr my $bool = $scenario->need_tp;
-
-Whether terrain pack extension is needed.
-
-=attr my $bool = $scenario->need_ef;
-
-Whether eastern front extension is needed.
-
-=attr my $bool = $scenario->need_mt;
-
-Whether mediterranean theater extension is needed.
-
-=attr my $bool = $scenario->need_pt;
-
-Whether pacific theater extension is needed.
-
-=attr my $bool = $scenario->need_ap;
-
-Whether air pack extension is needed.
-
-=attr my $bool = $scenario->need_bm;
-
-Whether battle maps extension is needed.
-
-=attr my $bool = $scenario->need_cb;
-
-Whether campaign book extension is needed.
-
-=cut
 
 has id        => ( rw, isa=>'Int', required );
 has name      => ( rw, isa=>'Str', required );
@@ -109,17 +49,6 @@ has languages => ( rw, isa=>'ArrayRef[Str]', auto_deref );
 
 # -- public methods
 
-=method as_string
-
-    my $str = $scenario->as_string;
-
-Return a line (with a final \n) dumping the scenario and all its
-attributes. It is also the method called for stringification, eg when
-doing stuff like:
-
-    print $scenario;
-
-=cut
 
 sub as_string {
     my $s = shift;
@@ -134,42 +63,6 @@ sub as_string {
     return $out;
 }
 
-=method tp
-
-=method ef
-
-=method pt
-
-=method mt
-
-=method ap
-
-    my $str = $scenario->tp;
-    my $str = $scenario->ef;
-    my $str = $scenario->pt;
-    my $str = $scenario->mt;
-    my $str = $scenario->ap;
-
-
-Those five methods return either an empty string or the abbreviation of
-the expansion depending on the value of the C<need_XX> boolean attribute
-of the C<$scenario>. They are useful for display purposes.
-
-=method langs
-
-    my $str = $scenario->langs;
-
-Return a string with existing language versions this scenario separated
-by commas. eg C<en,fr>.
-
-=method rating_as_star
-
-    my $str = $scenario->rating_as_star;
-
-Return a string of 0 to 3 stars C<*> depending on the C<rating>
-attribute of the C<$scenario>.
-
-=cut
 
 sub langs { my $s=shift; return join ",", $s->languages; }
 sub rating_as_star { my $s=shift; '*'x$s->rating; }
@@ -197,9 +90,153 @@ sub _format {
 }
 
 1;
-__END__
+
+
+=pod
+
+=head1 NAME
+
+WWW::DaysOfWonder::Memoir44::Scenario - scenario object
+
+=head1 VERSION
+
+version 2.120510
 
 =head1 DESCRIPTION
 
 This module represents a scenario with all its attributes.
+
+=head1 ATTRIBUTES
+
+=head2 my $int = $scenario->id;
+
+Id of the scenario.
+
+=head2 my $str = $scenario->name;
+
+Name of the scenario.
+
+=head2 my $str = $scenario->operation;
+
+Operation the scenario is part of.
+
+=head2 my $date = $scenario->updated;
+
+Date of last scenario update (format C<yyyy-mm-dd>).
+
+=head2 my $int = $scenario->rating;
+
+Average scenario rating (1, 2 or 3).
+
+=head2 my $str = $scenario->front;
+
+Front where the scenario takes place. Can be West, East,
+Mediterranean, etc.
+
+=head2 my $str = $scenario->author;
+
+Who wrote the scenario.
+
+=head2 my $str = $scenario->board;
+
+Country, beach, winter or desert.
+
+=head2 my $str = $scenario->format;
+
+Standard, overlord or breakthru.
+
+=head2 my $str = $scenario->source;
+
+Game (bundled with board game), approved (official extensions), public
+(all the other).
+
+=head2 my $bool = $scenario->need_tp;
+
+Whether terrain pack extension is needed.
+
+=head2 my $bool = $scenario->need_ef;
+
+Whether eastern front extension is needed.
+
+=head2 my $bool = $scenario->need_mt;
+
+Whether mediterranean theater extension is needed.
+
+=head2 my $bool = $scenario->need_pt;
+
+Whether pacific theater extension is needed.
+
+=head2 my $bool = $scenario->need_ap;
+
+Whether air pack extension is needed.
+
+=head2 my $bool = $scenario->need_bm;
+
+Whether battle maps extension is needed.
+
+=head2 my $bool = $scenario->need_cb;
+
+Whether campaign book extension is needed.
+
+=head1 METHODS
+
+=head2 as_string
+
+    my $str = $scenario->as_string;
+
+Return a line (with a final \n) dumping the scenario and all its
+attributes. It is also the method called for stringification, eg when
+doing stuff like:
+
+    print $scenario;
+
+=head2 tp
+
+=head2 ef
+
+=head2 pt
+
+=head2 mt
+
+=head2 ap
+
+    my $str = $scenario->tp;
+    my $str = $scenario->ef;
+    my $str = $scenario->pt;
+    my $str = $scenario->mt;
+    my $str = $scenario->ap;
+
+Those five methods return either an empty string or the abbreviation of
+the expansion depending on the value of the C<need_XX> boolean attribute
+of the C<$scenario>. They are useful for display purposes.
+
+=head2 langs
+
+    my $str = $scenario->langs;
+
+Return a string with existing language versions this scenario separated
+by commas. eg C<en,fr>.
+
+=head2 rating_as_star
+
+    my $str = $scenario->rating_as_star;
+
+Return a string of 0 to 3 stars C<*> depending on the C<rating>
+attribute of the C<$scenario>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jerome Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
 

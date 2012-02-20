@@ -1,8 +1,19 @@
+#
+# This file is part of WWW-DaysOfWonder-Memoir44
+#
+# This software is copyright (c) 2009 by Jerome Quelin.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 use 5.010;
 use strict;
 use warnings;
 
 package WWW::DaysOfWonder::Memoir44::Types;
+{
+  $WWW::DaysOfWonder::Memoir44::Types::VERSION = '2.120510';
+}
 # ABSTRACT: various types used in the distribution
 
 use Moose::Util::TypeConstraints;
@@ -21,7 +32,17 @@ coerce 'Int_0_3',
     via { 0+$_ };
 
 1;
-__END__
+
+
+=pod
+
+=head1 NAME
+
+WWW::DaysOfWonder::Memoir44::Types - various types used in the distribution
+
+=head1 VERSION
+
+version 2.120510
 
 =head1 DESCRIPTION
 
@@ -46,3 +67,20 @@ C<approved> (officially approved by days of wonder) and C<public>
 (provided by other users).
 
 =back
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jerome Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
+

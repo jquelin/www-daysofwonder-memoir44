@@ -1,12 +1,33 @@
+#
+# This file is part of WWW-DaysOfWonder-Memoir44
+#
+# This software is copyright (c) 2009 by Jerome Quelin.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 use 5.010;
 use strict;
 use warnings;
 
 package WWW::DaysOfWonder::Memoir44;
+{
+  $WWW::DaysOfWonder::Memoir44::VERSION = '2.120510';
+}
 # ABSTRACT: download & manage memoir44 scenarios from official website
 
 1;
-__END__
+
+
+=pod
+
+=head1 NAME
+
+WWW::DaysOfWonder::Memoir44 - download & manage memoir44 scenarios from official website
+
+=head1 VERSION
+
+version 2.120510
 
 =head1 DESCRIPTION
 
@@ -25,8 +46,6 @@ officials and non-officials scenarios.
 
 Don't use this module directly, but check the L<mem44> command for an
 easy to use way of fetching the scenarios.
-
-
 
 =head1 SEE ALSO
 
@@ -59,4 +78,19 @@ L<http://cpanratings.perl.org/d/WWW-DaysOfWonder-Memoir44>
 
 =back
 
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jerome Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
 

@@ -1,8 +1,19 @@
+#
+# This file is part of WWW-DaysOfWonder-Memoir44
+#
+# This software is copyright (c) 2009 by Jerome Quelin.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 use 5.012;
 use strict;
 use warnings;
 
 package WWW::DaysOfWonder::Memoir44::DB::Params;
+{
+  $WWW::DaysOfWonder::Memoir44::DB::Params::VERSION = '2.120510';
+}
 # ABSTRACT: various runtime params
 
 use Config::Tiny;
@@ -25,13 +36,6 @@ sub _build__params {
 
 # -- public methods
 
-=method get
-
-    my $value = $params->get( $key );
-
-Return the value associated to C<$key> in the wanted section.
-
-=cut
 
 sub get {
     my ($self, $key) = @_;
@@ -40,13 +44,6 @@ sub get {
 }
 
 
-=method set
-
-    $params->set( $key, $value );
-
-Store the C<$value> associated to C<$key> in the wanted section.
-
-=cut
 
 sub set {
     my ($self, $key, $value) = @_;
@@ -58,14 +55,23 @@ sub set {
 
 
 1;
-__END__
+
+
+=pod
+
+=head1 NAME
+
+WWW::DaysOfWonder::Memoir44::DB::Params - various runtime params
+
+=head1 VERSION
+
+version 2.120510
 
 =head1 SYNOPSIS
 
     my $params = WWW::DaysOfWonder::Memoir44::DB::Params->instance;
     my $value  = $params->get( $key );
     $params->set( $key, $value );
-
 
 =head1 DESCRIPTION
 
@@ -74,4 +80,34 @@ This module allows to store various runtime parameters.
 It implements a singleton responsible for automatic retrieving & saving
 of the various information. Each module gets its own section, so keys
 won't be over-written if sharing the same name accross package.
+
+=head1 METHODS
+
+=head2 get
+
+    my $value = $params->get( $key );
+
+Return the value associated to C<$key> in the wanted section.
+
+=head2 set
+
+    $params->set( $key, $value );
+
+Store the C<$value> associated to C<$key> in the wanted section.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jerome Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
 

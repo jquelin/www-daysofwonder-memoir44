@@ -1,8 +1,19 @@
+#
+# This file is part of WWW-DaysOfWonder-Memoir44
+#
+# This software is copyright (c) 2009 by Jerome Quelin.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 use 5.010;
 use strict;
 use warnings;
 
 package WWW::DaysOfWonder::Memoir44::Url;
+{
+  $WWW::DaysOfWonder::Memoir44::Url::VERSION = '2.120510';
+}
 # ABSTRACT: encapsulation of days of wonder urls
 
 use Moose;
@@ -14,12 +25,6 @@ use overload q{""} => 'as_string';
 
 # -- attributes
 
-=attr $url->source;
-
-The scenarios source. See the C<Source> type in
-L<WWW::DaysOfWonder::Memoir44::Types>.
-
-=cut
 
 has source => ( ro, isa=>'Str', required   );
 has _uri   => ( ro, isa=>'URI', lazy_build, handles=>['as_string'] );
@@ -60,18 +65,22 @@ sub _build__uri {
 
 # -- public methods
 
-=method my $str = $url->as_string;
-
-Stringifies the object in a well-formed url. This is the method called
-when the object needs to be stringified by perl due to the context.
-
-=cut
 
 # handled by _uri attribute
 
 
 1;
-__END__
+
+
+=pod
+
+=head1 NAME
+
+WWW::DaysOfWonder::Memoir44::Url - encapsulation of days of wonder urls
+
+=head1 VERSION
+
+version 2.120510
 
 =head1 SYNOPSIS
 
@@ -79,10 +88,39 @@ __END__
     my $url = WWW::DaysOfWonder::Memoir44::Url->new( { source => 'game' } );
     print $url;
 
-
 =head1 DESCRIPTION
 
 This module encapsulates urls to fetch scenarios from Days of Wonder.
 Depending on various criterias (cf attributes), the url listing the
 available scenarios will be different.
+
+=head1 ATTRIBUTES
+
+=head2 $url->source;
+
+The scenarios source. See the C<Source> type in
+L<WWW::DaysOfWonder::Memoir44::Types>.
+
+=head1 METHODS
+
+=head2 my $str = $url->as_string;
+
+Stringifies the object in a well-formed url. This is the method called
+when the object needs to be stringified by perl due to the context.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jerome Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
 

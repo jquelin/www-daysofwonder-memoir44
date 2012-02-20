@@ -1,8 +1,19 @@
+#
+# This file is part of WWW-DaysOfWonder-Memoir44
+#
+# This software is copyright (c) 2009 by Jerome Quelin.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 use 5.012;
 use strict;
 use warnings;
 
 package WWW::DaysOfWonder::Memoir44::Filter;
+{
+  $WWW::DaysOfWonder::Memoir44::Filter::VERSION = '2.120510';
+}
 # ABSTRACT: filter object
 
 use Moose;
@@ -17,28 +28,6 @@ use WWW::DaysOfWonder::Memoir44::Types;
 
 # -- public attributes
 
-=attr ids
-
-Scenario id (if multiple entries, only one of them need to match).
-Alias: C<i>.
-
-=attr name
-
-Scenario name. Alias: C<n>.
-
-=attr operation
-
-Scenario operation. Alias: C<o>.
-
-=attr format
-
-Scenario format. Aliases: C<fmt> or C<f>.
-
-=attr board
-
-Scenario board. Alias: C<b>.
-
-=cut
 
 has ids => (
     rw, auto_deref,
@@ -89,35 +78,6 @@ has board => (
 );
 
 
-=attr my $bool = $scenario->tp;
-
-Whether terrain pack extension is required.
-
-=attr my $bool = $scenario->ef;
-
-Whether eastern front extension is required.
-
-=attr my $bool = $scenario->mt;
-
-Whether mediterranean theater extension is required.
-
-=attr my $bool = $scenario->pt;
-
-Whether pacific theater extension is required.
-
-=attr my $bool = $scenario->ap;
-
-Whether air pack extension is required.
-
-=attr my $bool = $scenario->bm;
-
-Whether battle maps extension is required.
-
-=attr my $bool = $scenario->cb;
-
-Whether campaign book extension is required.
-
-=cut
 
 has tp   => ( rw, isa=>'Bool' );
 has ef   => ( rw, isa=>'Bool' );
@@ -128,17 +88,6 @@ has bm   => ( rw, isa=>'Bool' );
 has cb   => ( rw, isa=>'Bool' );
 
 
-=attr languages
-
-Languages accepted for a scenario (if multiple entries, only one of them
-need to match). Aliases: C<lang> or C<l>.
-
-=attr rating
-
-Minimum scenario rating (integer between 0 and 3). Aliases: C<rate> or
-C<r>.
-
-=cut
 
 has languages => (
     rw, auto_deref,
@@ -159,9 +108,6 @@ has rating => (
 
 # -- public methods
 
-=method as_grep_clause
-
-=cut
 
 sub as_grep_clause {
     my $self = shift;
@@ -221,10 +167,101 @@ sub as_grep_clause {
 
 
 1;
-__END__
+
+
+=pod
+
+=head1 NAME
+
+WWW::DaysOfWonder::Memoir44::Filter - filter object
+
+=head1 VERSION
+
+version 2.120510
 
 =head1 DESCRIPTION
 
 This module represents a filter that can be applied to the list of
 scenarios.
+
+=head1 ATTRIBUTES
+
+=head2 ids
+
+Scenario id (if multiple entries, only one of them need to match).
+Alias: C<i>.
+
+=head2 name
+
+Scenario name. Alias: C<n>.
+
+=head2 operation
+
+Scenario operation. Alias: C<o>.
+
+=head2 format
+
+Scenario format. Aliases: C<fmt> or C<f>.
+
+=head2 board
+
+Scenario board. Alias: C<b>.
+
+=head2 my $bool = $scenario->tp;
+
+Whether terrain pack extension is required.
+
+=head2 my $bool = $scenario->ef;
+
+Whether eastern front extension is required.
+
+=head2 my $bool = $scenario->mt;
+
+Whether mediterranean theater extension is required.
+
+=head2 my $bool = $scenario->pt;
+
+Whether pacific theater extension is required.
+
+=head2 my $bool = $scenario->ap;
+
+Whether air pack extension is required.
+
+=head2 my $bool = $scenario->bm;
+
+Whether battle maps extension is required.
+
+=head2 my $bool = $scenario->cb;
+
+Whether campaign book extension is required.
+
+=head2 languages
+
+Languages accepted for a scenario (if multiple entries, only one of them
+need to match). Aliases: C<lang> or C<l>.
+
+=head2 rating
+
+Minimum scenario rating (integer between 0 and 3). Aliases: C<rate> or
+C<r>.
+
+=head1 METHODS
+
+=head2 as_grep_clause
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jerome Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
 

@@ -1,8 +1,19 @@
+#
+# This file is part of WWW-DaysOfWonder-Memoir44
+#
+# This software is copyright (c) 2009 by Jerome Quelin.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 use 5.012;
 use strict;
 use warnings;
 
 package WWW::DaysOfWonder::Memoir44::DB::Scenarios;
+{
+  $WWW::DaysOfWonder::Memoir44::DB::Scenarios::VERSION = '2.120510';
+}
 # ABSTRACT: scenarios database
 
 use DateTime;
@@ -34,38 +45,14 @@ has scenarios => (
 
  # -- public methods
   
-=method add
-
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
-    $db->add( @scenarios );
-
-Store a new scenario in the scenarios database.
-
-=cut
 
 # implemented by the 'Array' trait of the 'scenarios' attribute.
 
 
-=method clear
-
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
-    $db->clear;
-
-Remove all scenarios from the database.
-
-=cut
 
 # implemented by the 'Array' trait of the 'scenarios' attribute.
 
 
-=method read
-
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->read;
-
-Read the whole scenarios database from a file. The file is internal to
-the distrib, and stored in a private directory.
-
-=cut
 
 sub read {
     my $self = shift;
@@ -75,15 +62,6 @@ sub read {
 }
 
 
-=method write
-
-    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
-    $db->write;
-
-Store the whole scenarios database to a file. The file is internal to
-the distrib, and stored in a private directory.
-
-=cut
 
 sub write {
     my $self = shift;
@@ -97,7 +75,17 @@ sub write {
 }
 
 1;
-__END__
+
+
+=pod
+
+=head1 NAME
+
+WWW::DaysOfWonder::Memoir44::DB::Scenarios - scenarios database
+
+=head1 VERSION
+
+version 2.120510
 
 =head1 SYNOPSIS
 
@@ -108,9 +96,55 @@ __END__
     $db->add( @top_scenarios );
     $db->write;
 
-
 =head1 DESCRIPTION
 
 This class implements a singleton holding all the scenarios available.
 It is the core of the whole distribution.
+
+=head1 METHODS
+
+=head2 add
+
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    $db->add( @scenarios );
+
+Store a new scenario in the scenarios database.
+
+=head2 clear
+
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    $db->clear;
+
+Remove all scenarios from the database.
+
+=head2 read
+
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->read;
+
+Read the whole scenarios database from a file. The file is internal to
+the distrib, and stored in a private directory.
+
+=head2 write
+
+    my $db = WWW::DaysOfWonder::Memoir44::DB::Scenarios->instance;
+    $db->write;
+
+Store the whole scenarios database to a file. The file is internal to
+the distrib, and stored in a private directory.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jerome Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
 
