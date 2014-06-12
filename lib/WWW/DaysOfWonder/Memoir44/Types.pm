@@ -7,9 +7,9 @@ package WWW::DaysOfWonder::Memoir44::Types;
 
 use Moose::Util::TypeConstraints;
 
-enum Board  => qw{ beach country winter desert };
-enum Format => qw{ standard brkthru overlord };
-enum Source => qw{ game approved classified public };
+enum Board  => [ qw{ beach country winter desert } ];
+enum Format => [ qw{ standard brkthru overlord } ];
+enum Source => [ qw{ game approved classified public } ];
 
 subtype 'Int_0_3',
     as 'Int',

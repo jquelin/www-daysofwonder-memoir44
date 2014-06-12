@@ -2,6 +2,7 @@ Changelog for WWW-DaysOfWonder-Memoir44
 
 {{$NEXT}}
  - migrated to @Author::JQUELIN
+ - adapt to new Moose (rt#90671)
 
 2.120510  2012-02-20 17:48:47 Europe/Paris
  - update: fetching all scenarios, independantly of languages
