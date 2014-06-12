@@ -9,6 +9,8 @@ use Moose;
 use MooseX::Has::Sugar;
 use Text::Padding;
 
+use WWW::DaysOfWonder::Memoir44::Types;
+
 use overload q{""} => 'as_string';
 
 
