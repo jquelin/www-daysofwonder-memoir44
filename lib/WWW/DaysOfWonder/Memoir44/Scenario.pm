@@ -189,11 +189,9 @@ sub _format {
     my $str = $self->$method;
 
     # fill up according to the requirements
-    given ( $align ) {
-        when ( "L" ) { return $pad->left  ($str, $maxlength); }
-        when ( "R" ) { return $pad->right ($str, $maxlength); }
-        when ( "C" ) { return $pad->center($str, $maxlength); }
-    }
+    return $pad->left  ($str, $maxlength) if $align eq "L";
+    return $pad->right ($str, $maxlength) if $align eq "R";
+    return $pad->center($str, $maxlength) if $align eq "C";
 }
 
 1;
