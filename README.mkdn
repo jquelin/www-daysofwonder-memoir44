@@ -1,0 +1,63 @@
+# NAME
+
+WWW::DaysOfWonder::Memoir44 - download & manage memoir44 scenarios from official website
+
+# VERSION
+
+version 2.120511
+
+# DESCRIPTION
+
+Memoir'44 is a unique historical game edited by Days of Wonder
+([http://www.daysofwonder.com](http://www.daysofwonder.com)), where players command a horde of
+little plastic Army men facing-off in dozens of WWII battles on an
+oversize hex game board. Each battle scenario mimics the historical
+terrain, troop placements and objectives of each army. Deploying forces
+through a variety of Command cards, the smart commander uses the unique
+skills of his units - infantry, paratroopers, tanks, artillery,
+commandos and resistance fighters - to its greatest strength.
+
+The game comes with some bundled scenarios, but there are a lot more
+available online. This module allows one to list and retrieve those
+officials and non-officials scenarios.
+
+Don't use this module directly, but check the [mem44](https://metacpan.org/pod/mem44) command for an
+easy to use way of fetching the scenarios.
+
+# SEE ALSO
+
+You can find more information on memoir44 on its website:
+[http://www.daysofwonder.com/memoir44/](http://www.daysofwonder.com/memoir44/)
+
+You can find more information on this module at:
+
+- Search CPAN
+
+    [http://search.cpan.org/dist/WWW-DaysOfWonder-Memoir44](http://search.cpan.org/dist/WWW-DaysOfWonder-Memoir44)
+
+- See open / report bugs
+
+    [http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-DaysOfWonder-Memoir44](http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-DaysOfWonder-Memoir44)
+
+- Git repository
+
+    [http://github.com/jquelin/www-daysofwonder-memoir44](http://github.com/jquelin/www-daysofwonder-memoir44)
+
+- AnnoCPAN: Annotated CPAN documentation
+
+    [http://annocpan.org/dist/WWW-DaysOfWonder-Memoir44](http://annocpan.org/dist/WWW-DaysOfWonder-Memoir44)
+
+- CPAN Ratings
+
+    [http://cpanratings.perl.org/d/WWW-DaysOfWonder-Memoir44](http://cpanratings.perl.org/d/WWW-DaysOfWonder-Memoir44)
+
+# AUTHOR
+
+Jerome Quelin
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jerome Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
