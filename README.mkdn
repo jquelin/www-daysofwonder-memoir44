@@ -4,7 +4,7 @@ WWW::DaysOfWonder::Memoir44 - download & manage memoir44 scenarios from official
 
 # VERSION
 
-version 2.120511
+version 3.000
 
 # DESCRIPTION
 
